@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>黄金价格波动监控板</title>
+  <style>
+    :root {
+      --bg: #1c1c1a;
+      --surface: #262626;
+      --text: #e8e6e1;
+      --text-secondary: #b4b2a9;
+      --text-tertiary: #888780;
+      --red: #f09595;
+      --green: #97c459;
+      --border: rgba(240,238,231,0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 1.25rem;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    h1 { margin: 0; font-size: 15px; font-weight: 500; }
+    .refresh-time { font-size: 12px; color: var(--text-secondary); }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .card {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      border: 0.5px solid var(--border);
+    }
+    .card-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      flex: 1;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      width: 100%;
+    }
+    .inst-name { font-size: 12px; color: var(--text-secondary); }
+    .threshold { font-size: 12px; color: var(--text-tertiary); }
+    .main-price {
+      font-size: 24px;
+      font-weight: 500;
+      white-space: nowrap;
+      margin-top: 4px;
+    }
+    .change { font-size: 13px; }
+    .sub-info {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+    .card-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      text-align: right;
+      font-size: 12px;
+      line-height: 1.7;
+      margin-left: 12px;
+      color: var(--text-secondary);
+    }
+    .hl-label { color: var(--text-tertiary); }
+    .high-price { color: var(--red); }
+    .low-price { color: var(--green); }
+    .bottom {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 12px;
+    }
+    .panel {
+      background: var(--surface);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 0.5px solid var(--border);
+    }
+    .panel-title {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .panel-content {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+    .alert-triggered { color: var(--red); }
+    .alert-normal { color: var(--text-secondary); }
+    @media (max-width: 600px) {
+      .cards { grid-template-columns: 1fr; }
+      .bottom { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>黄金价格波动监控板</h1>
+      <span class="refresh-time">更新：2026-07-28 22:57</span>
+    </div>
+    <div class="cards">
+      
+        <div class="card">
+          <div class="card-left">
+            <div class="card-header">
+              <span class="inst-name">伦敦金 / 美元/盎司</span>
+              <span class="threshold">阈值 1.0%</span>
+            </div>
+            <div class="main-price" style="color: #f09595;">
+              4,023.00 <span class="change">-1.32%</span>
+            </div>
+            <div class="sub-info">昨收 4,077.00</div>
+          </div>
+          <div class="card-right">
+            <div><span class="hl-label">高</span> <span class="high-price">--</span></div>
+            <div><span class="hl-label">低</span> <span class="low-price">--</span></div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-left">
+            <div class="card-header">
+              <span class="inst-name">上海金 AU9999 / 元/克</span>
+              <span class="threshold">阈值 1.0%</span>
+            </div>
+            <div class="main-price" style="color: #f09595;">
+              880.60 <span class="change">-0.30%</span>
+            </div>
+            <div class="sub-info">昨收 883.28</div>
+          </div>
+          <div class="card-right">
+            <div><span class="hl-label">高</span> <span class="high-price">--</span></div>
+            <div><span class="hl-label">低</span> <span class="low-price">--</span></div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-left">
+            <div class="card-header">
+              <span class="inst-name">COMEX 美黄金 / 美元/盎司</span>
+              <span class="threshold">阈值 1.0%</span>
+            </div>
+            <div class="main-price" style="color: #f09595;">
+              4,024.20 <span class="change">-1.30%</span>
+            </div>
+            <div class="sub-info">成交 107,339</div>
+          </div>
+          <div class="card-right">
+            <div><span class="hl-label">高</span> <span class="high-price">4,085.70</span></div>
+            <div><span class="hl-label">低</span> <span class="low-price">4,011.10</span></div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-left">
+            <div class="card-header">
+              <span class="inst-name">美元指数 · 美元兑人民币</span>
+              <span class="threshold">阈值 1.0%</span>
+            </div>
+            <div class="main-price" style="color: #f09595;">
+              -- <span class="change">--</span>
+            </div>
+            <div class="sub-info">美元兑人民币 6.7711 · 美元 -0.04%</div>
+          </div>
+          <div class="card-right">
+            <div><span class="hl-label">高</span> <span class="high-price">--</span></div>
+            <div><span class="hl-label">低</span> <span class="low-price">--</span></div>
+          </div>
+        </div>
+        
+    </div>
+    <div class="bottom">
+      <div class="panel">
+        <div class="panel-title">近期波动记录</div>
+        <div class="panel-content">
+          <div class="alert-triggered">07-28 22:57 伦敦金 -1.32% · 已触发</div><div class="alert-normal">2026-07-28 22:57 上海金 AU9999 -0.30% · 未触发</div><div class="alert-triggered">07-28 22:57 COMEX 美黄金 -1.30% · 已触发</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">COMEX 结算日历</div>
+        <div class="panel-content">
+          <div>7月 GCN26 · 2026-07-29</div><div>8月 GCQ26 · 2026-08-27</div><div>9月 GCU26 · 2026-09-28</div><div>10月 GCV26 · 2026-10-28</div><div>11月 GCX26 · 2026-11-26</div><div>12月 GCZ26 · 2026-12-29</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
