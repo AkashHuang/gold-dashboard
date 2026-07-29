@@ -1020,8 +1020,8 @@ def main() -> int:
     # 保存最新数据
     save_json(LATEST_PATH, latest)
 
-    # 渲染 HTML
-    html = render_dashboard(config, latest, alerts_log, now)
+    # 渲染 HTML（刷新时间统一用北京时间，避免 CI runner 的 UTC 导致显示偏差）
+    html = render_dashboard(config, latest, alerts_log, beijing_now)
     with open(HTML_PATH, "w", encoding="utf-8") as f:
         f.write(html)
 
