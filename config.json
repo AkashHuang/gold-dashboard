@@ -2,21 +2,23 @@
   "notifiers": {
     "serverchan": {
       "enabled": true,
-      "sendkeys": []
+      "sendkeys": [
+        "SCT386610TDfMT3BfD2FiPMYO6zX3yqmWl"
+      ]
     },
     "email": {
       "enabled": true,
-      "recipients": []
+      "recipients": [
+        "13621074014@139.com",
+        "kally20090409@163.com"
+      ]
     }
   },
   "alert_cooldown_hours": 4,
   "record_retention_hours": 24,
   "check_interval_hours": 1,
   "active_hours": [
-    [
-      "05:00",
-      "23:59"
-    ]
+    ["05:00", "23:59"]
   ],
   "publish": {
     "github_pages": {
@@ -111,7 +113,8 @@
       "id": "shanghai_silver",
       "type": "data",
       "name": "上海白银",
-      "unit": "元/千克",
+      "unit": "元/克",
+      "scale": 0.001,
       "source": "sge",
       "threshold": 1.0,
       "enabled": true
