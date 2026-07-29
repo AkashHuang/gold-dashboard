@@ -128,6 +128,12 @@ def fetch_from_snapshot(inst: dict, snap: dict) -> dict:
     for k in ("latest", "prev_close", "open", "high", "low", "change_pct", "volume", "update_time", "source"):
         if k in data:
             result[k] = data[k]
+    # 单位换算（如 上海白银 元/千克 → 元/克，scale=0.001）；只作用于价格字段，不影响涨跌幅/成交量
+    scale = inst.get("scale")
+    if scale:
+        for k in ("latest", "prev_close", "open", "high", "low"):
+            if result.get(k) is not None:
+                result[k] = result[k] * scale
     return result
 
 
@@ -726,6 +732,18 @@ def main() -> int:
 
     # 读取上一轮快照（用于推算涨跌幅 / 历史高低压缩）
     prev_snapshot = load_json(LATEST_PATH, {})
+    # latest.json 中带 scale 的品种已是换算后单位（如 元/克），
+    # 而 market_data 的行情原始值仍是来源单位（如 元/千克），
+    # 这里先还原为原始单位，避免跨单位比较产生错误涨跌幅。
+    for inst in config["instruments"]:
+        scale = inst.get("scale")
+        if not scale:
+            continue
+        prev = prev_snapshot.get(inst["id"])
+        if isinstance(prev, dict):
+            for k in ("latest", "prev_close", "open", "high", "low"):
+                if prev.get(k) is not None:
+                    prev[k] = prev[k] / scale
     snap = market_data.get_snapshot(prev_snapshot)
 
     # 两遍：先 data，再 ratio/computed（确保依赖可用）
