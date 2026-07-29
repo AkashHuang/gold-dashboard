@@ -314,6 +314,34 @@ def compute_ratio(inst: dict, latest: dict) -> dict:
     return result
 
 
+def compute_momentum(inst: dict, latest: dict) -> dict:
+    """金银涨幅比 = 白银涨幅% ÷ 黄金涨幅%（基于各自较昨收的 change_pct）。
+
+    当比值 >= threshold（默认 2.0）时视为白银相对黄金加速上涨，触发提醒。
+    注意：比值 = 银涨% / 金涨%，若两者同为下跌（如银 -4% / 金 -2%）也会得到 +2 的正值并触发，
+    属数学结果；若只想捕捉“银领涨”，需另行约束两者均为正。
+    """
+    silver_id = inst["silver"]
+    gold_id = inst["gold"]
+    silver = latest.get(silver_id, {})
+    gold = latest.get(gold_id, {})
+    s_pct = silver.get("change_pct")
+    g_pct = gold.get("change_pct")
+    result = {"_error": None}
+    if s_pct is None or g_pct is None:
+        result["_error"] = f"缺少 {silver_id} 或 {gold_id} 的涨跌幅"
+        return result
+    if g_pct == 0:
+        result["_error"] = "黄金涨跌幅为 0，无法计算比值"
+        return result
+    value = s_pct / g_pct
+    result["latest"] = value
+    result["silver_pct"] = s_pct
+    result["gold_pct"] = g_pct
+    result["change_pct"] = None
+    return result
+
+
 def update_history(latest: dict) -> None:
     """更新历史高/低等跟踪数据。"""
     history = load_json(HISTORY_PATH, {"instruments": {}, "date": None})
@@ -382,6 +410,22 @@ def send_serverchan(sendkeys: list[str], title: str, body: str) -> None:
             print(f"Server酱发送失败 ({key[:8]}...): {e}", file=sys.stderr)
 
 
+def _in_cooldown(inst_id: str, alerts_log: list, cooldown: timedelta, now: datetime) -> bool:
+    """判断某品种是否仍处于提醒冷却期内。"""
+    last_alert = None
+    for a in reversed(alerts_log):
+        if a.get("inst_id") == inst_id and a.get("triggered"):
+            last_alert = a
+            break
+    if not last_alert:
+        return False
+    try:
+        last_time = datetime.strptime(last_alert["time"], "%Y-%m-%d %H:%M")
+    except ValueError:
+        return False
+    return now - last_time < cooldown
+
+
 def build_alert_messages(config: dict, latest: dict, triggered: list[tuple]) -> list[dict]:
     """构造待发送的提醒消息列表。"""
     alerts = []
@@ -391,6 +435,27 @@ def build_alert_messages(config: dict, latest: dict, triggered: list[tuple]) -> 
         if not inst:
             continue
         data = latest.get(inst_id, {})
+
+        # 金银涨幅比（momentum）：单独组织文案
+        if inst.get("type") == "momentum":
+            silver_pct = data.get("silver_pct")
+            gold_pct = data.get("gold_pct")
+            title = f"【{inst['name']}】{change_pct:.2f}（≥{inst.get('threshold')}）"
+            body_lines = [
+                f"时间：{now_str}",
+                f"指标：{inst['name']} = 白银涨幅% / 黄金涨幅%",
+                f"白银涨幅：{format_change_pct(silver_pct)}",
+                f"黄金涨幅：{format_change_pct(gold_pct)}",
+                f"比值：{change_pct:.2f}（触发阈值 ≥{inst.get('threshold')}）",
+            ]
+            alerts.append({
+                "title": title,
+                "body": "\n".join(body_lines),
+                "inst_id": inst_id,
+                "change_pct": change_pct,
+            })
+            continue
+
         latest_price = data.get("latest")
         title = f"【{inst['name']}】波动 {format_change_pct(change_pct)}"
         body_lines = [
@@ -474,7 +539,10 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
             volume = data.get("volume")
             market_state = data.get("market_state")
 
-        change_color = "#97c459" if (change_pct is not None and change_pct >= 0) else "#f09595"
+        if inst.get("type") == "momentum":
+            change_color = "#e8e6e1"  # 比值用中性色，避免误读为涨跌
+        else:
+            change_color = "#97c459" if (change_pct is not None and change_pct >= 0) else "#f09595"
         change_sign = "+" if (change_pct is not None and change_pct >= 0) else ""
         change_text = f"{change_sign}{change_pct:.2f}%" if change_pct is not None else "--"
 
@@ -494,15 +562,40 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
         if market_state:
             sub_info = (sub_info + " · " if sub_info else "") + market_state
 
+        # 金银涨幅比：副信息展示银/金各自涨幅
+        if inst.get("type") == "momentum" and not data.get("_error"):
+            sp = data.get("silver_pct")
+            gp = data.get("gold_pct")
+            momentum_sub = f"银 {format_change_pct(sp)} / 金 {format_change_pct(gp)}"
+            sub_info = (sub_info + " · " if sub_info else "") + momentum_sub
+
         unit_label = f" / {unit}" if unit else ""
         header = f"{name}{unit_label}"
 
+        # 卡片边框高亮（比值处于参考区间）
+        in_band = False
+        if inst.get("band") and latest_price is not None:
+            band_lo, band_hi = inst["band"]
+            in_band = band_lo <= latest_price <= band_hi
+        card_class = "card in-band" if in_band else "card"
+
+        # 阈值 / 参考标签
+        if inst.get("band"):
+            band_lo, band_hi = inst["band"]
+            threshold_label = f"参考 {band_lo}-{band_hi}"
+        elif inst.get("no_alert"):
+            threshold_label = "仅展示"
+        elif inst.get("type") == "momentum":
+            threshold_label = f"触发 ≥{threshold}"
+        else:
+            threshold_label = f"阈值 {threshold}%"
+
         cards_html.append(f"""
-        <div class="card">
+        <div class="{card_class}">
           <div class="card-left">
             <div class="card-header">
               <span class="inst-name">{header}</span>
-              <span class="threshold">阈值 {threshold}%</span>
+              <span class="threshold">{threshold_label}</span>
             </div>
             <div class="main-price" style="color: {change_color};">
               {format_price(latest_price)} <span class="change">{change_text}</span>
@@ -575,6 +668,9 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
       justify-content: space-between;
       align-items: stretch;
       border: 0.5px solid var(--border);
+    }}
+    .card.in-band {{
+      border-color: rgba(151,196,89,0.6);
     }}
     .card-left {{
       display: flex;
@@ -772,6 +868,11 @@ def main() -> int:
                     latest[inst["id"]] = compute_formula(inst, latest)
             except Exception as e:
                 latest[inst["id"]] = {"_error": str(e)}
+        elif inst["type"] == "momentum":
+            try:
+                latest[inst["id"]] = compute_momentum(inst, latest)
+            except Exception as e:
+                latest[inst["id"]] = {"_error": str(e)}
 
     # 更新历史高/低
     update_history(latest)
@@ -788,6 +889,37 @@ def main() -> int:
         data = latest.get(inst_id, {})
         if data.get("_error"):
             continue
+
+        # 仅展示、不提醒的品种（如 伦敦/上海 金银比）
+        if inst.get("no_alert"):
+            continue
+
+        # 金银涨幅比（momentum）：比值 >= 阈值时触发
+        if inst.get("type") == "momentum":
+            value = data.get("latest")
+            threshold = inst.get("threshold")
+            if value is None or threshold is None or threshold <= 0:
+                continue
+            if value >= threshold:
+                if _in_cooldown(inst_id, alerts_log, cooldown, now):
+                    continue
+                triggered.append((inst_id, value))
+                alerts_log.append({
+                    "time": now.strftime("%Y-%m-%d %H:%M"),
+                    "inst_id": inst_id,
+                    "message": f"{inst['name']} {value:.2f} · 已触发(≥{threshold})",
+                    "triggered": True
+                })
+            else:
+                alerts_log.append({
+                    "time": now.strftime("%Y-%m-%d %H:%M"),
+                    "inst_id": inst_id,
+                    "message": f"{inst['name']} {value:.2f} · 未触发",
+                    "triggered": False
+                })
+            continue
+
+        # 常规：按 change_pct 绝对值与阈值比较
         change_pct = data.get("change_pct")
         threshold = inst.get("threshold", config.get("default_threshold", 1.0))
         if change_pct is None or threshold is None or threshold <= 0:
@@ -801,20 +933,8 @@ def main() -> int:
             })
             continue
 
-        # 检查是否在冷却期内已经提醒过
-        last_alert = None
-        for a in reversed(alerts_log):
-            if a.get("inst_id") == inst_id and a.get("triggered"):
-                last_alert = a
-                break
-
-        if last_alert:
-            try:
-                last_time = datetime.strptime(last_alert["time"], "%Y-%m-%d %H:%M")
-            except ValueError:
-                last_time = None
-            if last_time and now - last_time < cooldown:
-                continue
+        if _in_cooldown(inst_id, alerts_log, cooldown, now):
+            continue
 
         triggered.append((inst_id, change_pct))
         alerts_log.append({
