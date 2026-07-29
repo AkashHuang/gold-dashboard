@@ -1,125 +1,5 @@
 [
   {
-    "time": "2026-07-28 22:57",
-    "inst_id": "london_gold",
-    "message": "伦敦金 -1.32% · 已触发",
-    "triggered": true
-  },
-  {
-    "time": "2026-07-28 22:57",
-    "inst_id": "shanghai_gold",
-    "message": "上海金 AU9999 -0.30% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-28 22:57",
-    "inst_id": "comex_gold",
-    "message": "COMEX 美黄金 -1.30% · 已触发",
-    "triggered": true
-  },
-  {
-    "time": "2026-07-28 23:55",
-    "inst_id": "london_gold",
-    "message": "伦敦金 -0.86% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-28 23:55",
-    "inst_id": "shanghai_gold",
-    "message": "上海金 AU9999 -0.08% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-28 23:55",
-    "inst_id": "comex_gold",
-    "message": "COMEX 美黄金 -0.87% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 00:53",
-    "inst_id": "london_gold",
-    "message": "伦敦金 -0.87% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 00:53",
-    "inst_id": "shanghai_gold",
-    "message": "上海金 AU9999 -0.08% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 00:53",
-    "inst_id": "comex_gold",
-    "message": "COMEX 美黄金 -0.87% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:02",
-    "inst_id": "london_gold",
-    "message": "伦敦金 -0.96% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:02",
-    "inst_id": "comex_gold",
-    "message": "COMEX 美黄金 -0.96% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:02",
-    "inst_id": "shanghai_gold",
-    "message": "上海金 AU9999 -0.08% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:24",
-    "inst_id": "comex_gold",
-    "message": "COMEX 黄金 -0.99% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:24",
-    "inst_id": "comex_silver",
-    "message": "COMEX 白银 -2.06% · 已触发",
-    "triggered": true
-  },
-  {
-    "time": "2026-07-29 01:24",
-    "inst_id": "comex_ratio",
-    "message": "美金银比 +1.10% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:24",
-    "inst_id": "london_gold",
-    "message": "伦敦金 -0.99% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:24",
-    "inst_id": "shanghai_gold",
-    "message": "上海黄金 AU9999 -0.08% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:50",
-    "inst_id": "comex_ratio",
-    "message": "美金银比 +1.10% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:50",
-    "inst_id": "shanghai_gold",
-    "message": "上海黄金 AU9999 -0.26% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-29 01:50",
-    "inst_id": "shanghai_gold_night",
-    "message": "上海黄金（夜盘估算） -1.08% · 已触发",
-    "triggered": true
-  },
-  {
     "time": "2026-07-29 01:50",
     "inst_id": "comex_ratio",
     "message": "美金银比 +1.12% · 未触发",
@@ -547,6 +427,174 @@
   },
   {
     "time": "2026-07-29 14:34",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:06",
+    "inst_id": "comex_gold",
+    "message": "COMEX 黄金 +0.03% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:06",
+    "inst_id": "comex_ratio",
+    "message": "美金银比 -1.35% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:06",
+    "inst_id": "london_gold",
+    "message": "伦敦金 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:06",
+    "inst_id": "london_silver",
+    "message": "伦敦银 +0.19% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:06",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:06",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:07",
+    "inst_id": "comex_gold",
+    "message": "COMEX 黄金 +0.03% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:07",
+    "inst_id": "comex_ratio",
+    "message": "美金银比 -1.33% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:07",
+    "inst_id": "london_gold",
+    "message": "伦敦金 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:07",
+    "inst_id": "london_silver",
+    "message": "伦敦银 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:07",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 15:07",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "comex_gold",
+    "message": "COMEX 黄金 -0.01% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "comex_silver",
+    "message": "COMEX 白银 +0.97% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "comex_ratio",
+    "message": "美金银比 -0.97% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "london_gold",
+    "message": "伦敦金 -0.16% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "london_silver",
+    "message": "伦敦银 -0.53% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 +1.03% · 已触发",
+    "triggered": true
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "shanghai_gold_night",
+    "message": "上海黄金（夜盘估算） -0.03% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:32",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 +2.09% · 已触发",
+    "triggered": true
+  },
+  {
+    "time": "2026-07-29 16:34",
+    "inst_id": "comex_gold",
+    "message": "COMEX 黄金 -0.01% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:34",
+    "inst_id": "comex_silver",
+    "message": "COMEX 白银 +0.95% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:34",
+    "inst_id": "comex_ratio",
+    "message": "美金银比 -0.95% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:34",
+    "inst_id": "london_gold",
+    "message": "伦敦金 -0.01% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:34",
+    "inst_id": "london_silver",
+    "message": "伦敦银 +0.03% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:34",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:34",
+    "inst_id": "shanghai_gold_night",
+    "message": "上海黄金（夜盘估算） -0.03% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-07-29 16:34",
     "inst_id": "shanghai_silver",
     "message": "上海白银 +0.00% · 未触发",
     "triggered": false
