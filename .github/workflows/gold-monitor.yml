@@ -1,0 +1,41 @@
+name: Gold Monitor Update
+
+on:
+  schedule:
+    # 北京时间 05:00–24:00 = UTC 21:00(前一天) – 04:00，每小时一次
+    - cron: "0 21-23,0-16 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gold-monitor
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run update
+        env:
+          GITHUB_ACTIONS: "true"
+          SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
+          ALERT_EMAILS: ${{ secrets.ALERT_EMAILS }}
+        run: python update.py
+
+      - name: Commit and push results
+        run: |
+          git config user.name "WorkBuddy Bot"
+          git config user.email "bot@workbuddy.local"
+          git add index.html data/
+          git commit -m "auto update dashboard" || echo "no changes"
+          git push
