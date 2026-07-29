@@ -65,6 +65,16 @@
       "enabled": true
     },
     {
+      "id": "silver_gold_momentum",
+      "type": "momentum",
+      "name": "金银涨幅比",
+      "silver": "comex_silver",
+      "gold": "comex_gold",
+      "unit": "",
+      "threshold": 2.0,
+      "enabled": true
+    },
+    {
       "id": "london_gold",
       "type": "data",
       "name": "伦敦金",
@@ -132,16 +142,6 @@
       "threshold": 2.0,
       "band": [50, 55],
       "no_alert": true,
-      "enabled": true
-    },
-    {
-      "id": "silver_gold_momentum",
-      "type": "momentum",
-      "name": "金银涨幅比",
-      "silver": "comex_silver",
-      "gold": "comex_gold",
-      "unit": "",
-      "threshold": 2.0,
       "enabled": true
     },
     {
