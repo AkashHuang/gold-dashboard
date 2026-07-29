@@ -7,34 +7,34 @@
       "low": 875.0
     },
     "comex_gold": {
-      "high": 4038.2,
+      "high": 4046.7,
       "low": 4009.3
     },
     "fx": {},
     "london_ratio": {
       "high": 69.9741229593609,
-      "low": 69.72753923090188
+      "low": 69.5960413080895
     },
     "silver_us": {},
     "comex_silver": {
-      "high": 58.26,
+      "high": 58.46,
       "low": 57.09
     },
     "comex_ratio": {
       "high": 70.26772477544257,
-      "low": 69.4469768641954
-    },
-    "shanghai_silver": {
-      "high": 13970.0,
-      "low": 13969.0
-    },
-    "shanghai_ratio": {
-      "high": 0.06250357961053837,
-      "low": 0.06250357961053837
+      "low": 69.2517356646953
     },
     "shanghai_gold_night": {
       "high": 879.1299483980902,
       "low": 872.8189727844133
+    },
+    "shanghai_silver": {
+      "high": 14.26,
+      "low": 13.97
+    },
+    "shanghai_ratio": {
+      "high": 61.85133239831697,
+      "low": 61.85133239831697
     }
   },
   "date": "2026-07-29"
