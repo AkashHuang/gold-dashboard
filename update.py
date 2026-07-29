@@ -107,6 +107,16 @@ def is_china_gold_open(beijing_dt: datetime) -> bool:
     return morning or afternoon or night
 
 
+def _sge_overnight_gap(beijing_dt: datetime) -> bool:
+    """上海黄金夜盘结束(02:30)至日盘开盘(09:00)之间的休市间隙。
+
+    该窗口内 SGE 完全休市，夜盘估算冻结为 COMEX 昨结(隔夜参考)；
+    其余时段（夜盘 20:00-02:30、日盘 09:00-15:30）估算实时跟踪外盘。
+    """
+    t = beijing_dt.hour + beijing_dt.minute / 60.0
+    return 2.5 <= t < 9.0
+
+
 # ----------------------------------------------------------------------------
 # 取数 / 计算
 # ----------------------------------------------------------------------------
@@ -140,8 +150,8 @@ def fetch_from_snapshot(inst: dict, snap: dict) -> dict:
 def compute_night_gold(inst: dict, latest: dict, beijing_dt: datetime) -> dict:
     """上海黄金（夜盘估算）。
 
-    中国市场休市：用 COMEX 黄金实时价 × USDCNY / 31.1035（实时跟踪外盘）
-    中国市场开市：用 COMEX 黄金昨结价（收盘参考）× USDCNY / 31.1035（冻结为隔夜参考）
+    休市间隙(02:30-09:00)：用 COMEX 黄金昨结价（隔夜参考）× USDCNY / 31.1035（冻结）
+    其余时段（夜盘 20:00-02:30、日盘 09:00-15:30）：实时跟踪 COMEX 最新价 × USDCNY
     """
     cg = latest.get("comex_gold", {})
     fx = latest.get("fx", {}).get("usdcny", {})
@@ -154,15 +164,15 @@ def compute_night_gold(inst: dict, latest: dict, beijing_dt: datetime) -> dict:
     if cg_prev is None or usdcny_prev is None:
         return {"_error": "缺少 COMEX 黄金昨结或 USDCNY 昨收"}
 
-    open_market = is_china_gold_open(beijing_dt)
-    if open_market:
-        # 开市：用 COMEX 昨结（收盘参考）作为基准；USDCNY 用实时
+    frozen = _sge_overnight_gap(beijing_dt)
+    if frozen:
+        # 休市间隙：用 COMEX 昨结（隔夜参考）作为基准；USDCNY 用实时
         basis = cg_prev
         value = basis * usdcny_latest / 31.1035
         change_pct = None  # 冻结参考，不计算日内涨跌
         prev_value = basis * usdcny_prev / 31.1035
     else:
-        # 休市：实时跟踪 COMEX 最新价
+        # 实时跟踪 COMEX 最新价
         value = cg_latest * usdcny_latest / 31.1035
         prev_value = cg_prev * usdcny_prev / 31.1035
         change_pct = (value - prev_value) / prev_value * 100 if prev_value else None
@@ -183,7 +193,7 @@ def compute_night_gold(inst: dict, latest: dict, beijing_dt: datetime) -> dict:
         "change_pct": change_pct,
         "high": high,
         "low": low,
-        "market_state": "开市(隔夜参考)" if open_market else "休市(实时)",
+        "market_state": "隔夜参考" if frozen else "实时估算",
     }
 
 
