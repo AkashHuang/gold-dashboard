@@ -1,15 +1,15 @@
 {
   "_meta": {
-    "updated_at": "2026-07-29T17:17:06.804986"
+    "updated_at": "2026-07-29T17:54:43.883612"
   },
   "comex_gold": {
-    "latest": 4035.4,
+    "latest": 4033.6,
     "prev_close": 4038.7,
     "open": 4020.9,
     "high": 4046.7,
     "low": 4009.3,
-    "change_pct": -0.08,
-    "volume": 15735.0,
+    "change_pct": -0.13,
+    "volume": 17038.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
@@ -19,17 +19,17 @@
     "high": 58.46,
     "low": 57.09,
     "change_pct": 0.99,
-    "volume": 6712.0,
+    "volume": 6907.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4036.82,
-    "change_pct": 0.0002477203534528075,
+    "latest": 4034.91,
+    "change_pct": -0.047314470300888055,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "latest": 57.88,
-    "change_pct": 0.017280110592716634,
+    "latest": 57.81,
+    "change_pct": -0.12093987560469986,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -50,34 +50,34 @@
   },
   "fx": {
     "usdcny": {
-      "latest": 6.7655,
+      "latest": 6.7648,
       "prev_close": 6.7668,
       "open": 6.769,
       "high": 6.7733,
-      "low": 6.7646,
-      "change_pct": -0.02,
+      "low": 6.7643,
+      "change_pct": -0.03,
       "source": "qt.gtimg.cn"
     }
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 69.45611015490533,
+    "latest": 69.42512908777968,
     "prev_close": 70.20285421265795,
-    "change_pct": -1.0636947259873373,
+    "change_pct": -1.107825505957912,
     "high": 70.26772477544257,
     "low": 69.2517356646953
   },
   "london_ratio": {
     "_error": null,
-    "latest": 69.74464409122322,
+    "latest": 69.79605604566683,
     "change_pct": null,
     "high": 69.9741229593609,
     "low": 69.5960413080895
   },
   "shanghai_gold_night": {
-    "latest": 877.762910926423,
+    "latest": 877.2806044335846,
     "prev_close": 878.649514041828,
-    "change_pct": -0.10090520750719986,
+    "change_pct": -0.15579700282838874,
     "high": 879.1299483980902,
     "low": 872.8189727844133,
     "market_state": "休市(实时)"
@@ -91,9 +91,9 @@
   },
   "silver_gold_momentum": {
     "_error": null,
-    "latest": -12.375,
+    "latest": -7.615384615384615,
     "silver_pct": 0.99,
-    "gold_pct": -0.08,
+    "gold_pct": -0.13,
     "change_pct": null
   }
 }
