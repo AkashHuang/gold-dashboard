@@ -1,0 +1,139 @@
+{
+  "notifiers": {
+    "serverchan": {
+      "enabled": true,
+      "sendkeys": []
+    },
+    "email": {
+      "enabled": true,
+      "recipients": []
+    }
+  },
+  "alert_cooldown_hours": 4,
+  "record_retention_hours": 24,
+  "check_interval_hours": 1,
+  "active_hours": [
+    [
+      "05:00",
+      "23:59"
+    ]
+  ],
+  "publish": {
+    "github_pages": {
+      "enabled": true,
+      "repo": "AkashHuang/gold-dashboard",
+      "path": "index.html",
+      "commit_message": "Update gold monitor dashboard"
+    }
+  },
+  "dashboard": {
+    "title": "贵金属价格波动监控板",
+    "refresh_time_format": "%Y-%m-%d %H:%M"
+  },
+  "instruments": [
+    {
+      "id": "comex_gold",
+      "type": "data",
+      "name": "COMEX 黄金",
+      "unit": "美元/盎司",
+      "source": "gtimg",
+      "threshold": 1.0,
+      "enabled": true,
+      "volume_unit": "手"
+    },
+    {
+      "id": "comex_silver",
+      "type": "data",
+      "name": "COMEX 白银",
+      "unit": "美元/盎司",
+      "source": "gtimg",
+      "threshold": 1.0,
+      "enabled": true,
+      "volume_unit": "手"
+    },
+    {
+      "id": "comex_ratio",
+      "type": "ratio",
+      "name": "美金银比",
+      "numerator": "comex_gold",
+      "denominator": "comex_silver",
+      "unit": "",
+      "threshold": 2.0,
+      "enabled": true
+    },
+    {
+      "id": "london_gold",
+      "type": "data",
+      "name": "伦敦金",
+      "unit": "美元/盎司",
+      "source": "gtimg",
+      "threshold": 1.0,
+      "enabled": true
+    },
+    {
+      "id": "london_silver",
+      "type": "data",
+      "name": "伦敦银",
+      "unit": "美元/盎司",
+      "source": "gtimg",
+      "threshold": 1.0,
+      "enabled": true
+    },
+    {
+      "id": "london_ratio",
+      "type": "ratio",
+      "name": "伦敦金银比",
+      "numerator": "london_gold",
+      "denominator": "london_silver",
+      "unit": "",
+      "threshold": 2.0,
+      "enabled": true
+    },
+    {
+      "id": "shanghai_gold",
+      "type": "data",
+      "name": "上海黄金 AU99.99",
+      "unit": "元/克",
+      "source": "sge",
+      "threshold": 1.0,
+      "enabled": true
+    },
+    {
+      "id": "shanghai_gold_night",
+      "type": "computed",
+      "name": "上海黄金（夜盘估算）",
+      "formula": "comex_gold.latest * fx.usdcny.latest / 31.1035",
+      "unit": "元/克",
+      "threshold": 1.0,
+      "enabled": true
+    },
+    {
+      "id": "shanghai_silver",
+      "type": "data",
+      "name": "上海白银",
+      "unit": "元/千克",
+      "source": "sge",
+      "threshold": 1.0,
+      "enabled": true
+    },
+    {
+      "id": "shanghai_ratio",
+      "type": "ratio",
+      "name": "上海金银比",
+      "numerator": "shanghai_gold",
+      "denominator": "shanghai_silver",
+      "unit": "",
+      "threshold": 2.0,
+      "enabled": true
+    },
+    {
+      "id": "fx",
+      "type": "data",
+      "name": "美元兑人民币",
+      "unit": "",
+      "source": "gtimg",
+      "threshold": 1.0,
+      "enabled": true
+    }
+  ]
+}
