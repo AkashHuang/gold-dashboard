@@ -522,6 +522,121 @@ def comex_settlement_dates(months: int = 12) -> list[dict]:
     return results
 
 
+# ----------------------------------------------------------------------------
+# 市场交易时段（北京时间，含夏令时）
+# ----------------------------------------------------------------------------
+
+INSTRUMENT_MARKET = {
+    "comex_gold": "comex",
+    "comex_silver": "comex",
+    "comex_ratio": "comex",
+    "silver_gold_momentum": "comex",
+    "london_gold": "london",
+    "london_silver": "london",
+    "london_ratio": "london",
+    "shanghai_gold": "sge",
+    "shanghai_silver": "sge",
+    "shanghai_ratio": "sge",
+    "shanghai_gold_night": "sge",
+    "fx": "fx",
+}
+
+
+def _nth_weekday(year: int, month: int, weekday: int, n: int) -> datetime:
+    """返回 year 年 month 月第 n 个指定星期几（Mon=0..Sun=6）的日期。"""
+    first = datetime(year, month, 1)
+    offset = (weekday - first.weekday()) % 7
+    return first + timedelta(days=offset + 7 * (n - 1))
+
+
+def _last_weekday(year: int, month: int, weekday: int) -> datetime:
+    """返回 year 年 month 月最后一个指定星期几的日期。"""
+    if month == 12:
+        nxt = datetime(year + 1, 1, 1)
+    else:
+        nxt = datetime(year, month + 1, 1)
+    last_day = (nxt - timedelta(days=1)).day
+    last = datetime(year, month, last_day)
+    offset = (weekday - last.weekday()) % 7
+    return last - timedelta(days=offset)
+
+
+def _us_dst_active(dt: datetime) -> bool:
+    """美国夏令时：3 月第 2 个周日至 11 月第 1 个周日。"""
+    start = _nth_weekday(dt.year, 3, 6, 2)
+    end = _nth_weekday(dt.year, 11, 6, 1)
+    return start.date() <= dt.date() < end.date()
+
+
+def _uk_dst_active(dt: datetime) -> bool:
+    """英国夏令时：3 月最后一个周日至 10 月最后一个周日。"""
+    start = _last_weekday(dt.year, 3, 6)
+    end = _last_weekday(dt.year, 10, 6)
+    return start.date() <= dt.date() < end.date()
+
+
+def _comex_open(b: datetime) -> bool:
+    """COMEX 期货：近乎 24x5，每日约 1 小时结算间隙；周末休市。"""
+    dst = _us_dst_active(b)
+    brk = 5 if dst else 6  # 结算间隙起始（北京时间）
+    wd = b.weekday()
+    t = b.hour + b.minute / 60.0
+    if wd == 5 and t >= brk:            # 周六自结算间隙起休市
+        return False
+    if wd == 6:                          # 周日全天休市
+        return False
+    if wd == 0 and t < brk + 1:         # 周一至开盘前休市
+        return False
+    if brk <= t < brk + 1:              # 每日结算间隙
+        return False
+    return True
+
+
+def _london_open(b: datetime) -> bool:
+    """伦敦现货：当地约 08:00-17:00（夏令时/冬令时对应北京时间不同）。"""
+    if b.weekday() >= 5:
+        return False
+    dst = _uk_dst_active(b)
+    t = b.hour + b.minute / 60.0
+    if dst:                             # BST: 北京 15:00-24:00
+        return 15 <= t < 24
+    return 16 <= t < 24 or 0 <= t < 1   # GMT: 北京 16:00-次日 01:00
+
+
+def _sge_open(b: datetime) -> bool:
+    """上海黄金交易所：日盘 09:00-11:30 / 13:30-15:30，夜盘 20:00-02:30。"""
+    wd = b.weekday()
+    if wd == 6:
+        return False                    # 周日休市
+    t = b.hour + b.minute / 60.0
+    day1 = 9 <= t <= 11.5
+    day2 = 13.5 <= t <= 15.5
+    night_pre = wd <= 4 and 20 <= t < 24            # 周一至周五夜盘前半段
+    night_post = 1 <= wd <= 5 and 0 <= t < 2.5      # 周二至周六凌晨（前一日夜盘延续）
+    return day1 or day2 or night_pre or night_post
+
+
+def _fx_open(b: datetime) -> bool:
+    """美元兑人民币：约 09:30-23:30（北京），周末休市。"""
+    if b.weekday() >= 5:
+        return False
+    t = b.hour + b.minute / 60.0
+    return 9.5 <= t <= 23.5
+
+
+def is_market_open(market: str, b: datetime) -> bool:
+    """返回指定市场在当前北京时间是否交易中。"""
+    if market == "comex":
+        return _comex_open(b)
+    if market == "london":
+        return _london_open(b)
+    if market == "sge":
+        return _sge_open(b)
+    if market == "fx":
+        return _fx_open(b)
+    return True
+
+
 def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: datetime) -> str:
     """渲染 HTML 监控板。"""
     title = config["dashboard"].get("title", "黄金价格波动监控板")
@@ -557,6 +672,11 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
             volume = data.get("volume")
             market_state = data.get("market_state")
 
+        # 市场开闭状态（按各市场真实交易时段，北京时间）
+        mkt = INSTRUMENT_MARKET.get(inst["id"], "unknown")
+        mkt_open = is_market_open(mkt, run_time)
+        status_class = "status-open" if mkt_open else "status-closed"
+
         if inst.get("type") == "momentum":
             change_color = "#e8e6e1"  # 比值用中性色，避免误读为涨跌
         else:
@@ -579,6 +699,11 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
 
         if market_state:
             sub_info = (sub_info + " · " if sub_info else "") + market_state
+
+        # 开闭状态小字（夜盘卡已有 market_state 说明，避免重复）
+        if market_state is None:
+            status_text = "交易中" if mkt_open else "休市"
+            sub_info = (sub_info + " · " if sub_info else "") + status_text
 
         # 金银涨幅比：副信息展示银/金各自涨幅
         if inst.get("type") == "momentum" and not data.get("_error"):
@@ -615,7 +740,7 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
         <div class="{card_class}">
           <div class="card-left">
             <div class="card-header">
-              <span class="inst-name">{header}</span>
+              <span class="inst-name"><span class="status-dot {status_class}"></span>{header}</span>
               <span class="threshold">{threshold_label}</span>
             </div>
             <div class="main-price" style="color: {change_color};">
@@ -708,6 +833,25 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
     }}
     .inst-name {{ font-size: 12px; color: var(--text-secondary); }}
     .threshold {{ font-size: 12px; color: var(--text-tertiary); }}
+    .status-dot {{
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+    }}
+    .status-open {{ background: var(--green); }}
+    .status-closed {{ background: transparent; border: 1.5px solid var(--text-tertiary); }}
+    .legend {{
+      display: flex;
+      gap: 16px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }}
+    .legend-item {{ display: flex; align-items: center; }}
+    .legend-item .status-dot {{ margin-right: 5px; }}
     .main-price {{
       font-size: 24px;
       font-weight: 500;
@@ -768,6 +912,10 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
     <div class="header">
       <h1>{title}</h1>
       <span class="refresh-time">更新：{refresh}</span>
+    </div>
+    <div class="legend">
+      <span class="legend-item"><span class="status-dot status-open"></span>交易中（开市）</span>
+      <span class="legend-item"><span class="status-dot status-closed"></span>休市（闭市）</span>
     </div>
     <div class="cards">
       {''.join(cards_html)}
