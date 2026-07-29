@@ -436,6 +436,24 @@ def build_alert_messages(config: dict, latest: dict, triggered: list[tuple]) -> 
             continue
         data = latest.get(inst_id, {})
 
+        # 区间触发（如 美金银比落入 50-55）：单独组织文案
+        if inst.get("band_alert"):
+            band_lo, band_hi = inst["band"]
+            title = f"【{inst['name']}】{change_pct:.2f} 进入区间[{band_lo},{band_hi}]"
+            body_lines = [
+                f"时间：{now_str}",
+                f"指标：{inst['name']}（金银比 = 金价 / 银价）",
+                f"当前比值：{change_pct:.2f}",
+                f"触发区间：{band_lo}-{band_hi}（比值落入该区间时提醒）",
+            ]
+            alerts.append({
+                "title": title,
+                "body": "\n".join(body_lines),
+                "inst_id": inst_id,
+                "change_pct": change_pct,
+            })
+            continue
+
         # 金银涨幅比（momentum）：单独组织文案
         if inst.get("type") == "momentum":
             silver_pct = data.get("silver_pct")
@@ -582,7 +600,10 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
         # 阈值 / 参考标签
         if inst.get("band"):
             band_lo, band_hi = inst["band"]
-            threshold_label = f"参考 {band_lo}-{band_hi}"
+            if inst.get("band_alert"):
+                threshold_label = f"区间 {band_lo}-{band_hi} 触发"
+            else:
+                threshold_label = f"参考 {band_lo}-{band_hi}"
         elif inst.get("no_alert"):
             threshold_label = "仅展示"
         elif inst.get("type") == "momentum":
@@ -894,13 +915,43 @@ def main() -> int:
         if inst.get("no_alert"):
             continue
 
-        # 金银涨幅比（momentum）：比值 >= 阈值时触发
+        # 区间触发（如 美金银比落在 50-55 区间）：以最新比值数值为判断依据
+        if inst.get("band_alert"):
+            value = data.get("latest")
+            if value is None or not inst.get("band"):
+                continue
+            band_lo, band_hi = inst["band"]
+            in_band = band_lo <= value <= band_hi
+            if in_band:
+                if _in_cooldown(inst_id, alerts_log, cooldown, now):
+                    continue
+                triggered.append((inst_id, value))
+                alerts_log.append({
+                    "time": now.strftime("%Y-%m-%d %H:%M"),
+                    "inst_id": inst_id,
+                    "message": f"{inst['name']} {value:.2f} · 进入区间[{band_lo},{band_hi}]·已触发",
+                    "triggered": True
+                })
+            else:
+                alerts_log.append({
+                    "time": now.strftime("%Y-%m-%d %H:%M"),
+                    "inst_id": inst_id,
+                    "message": f"{inst['name']} {value:.2f} · 未进入区间[{band_lo},{band_hi}]",
+                    "triggered": False
+                })
+            continue
+
+        # 金银涨幅比（momentum）：比值 >= 阈值 且 白银/黄金均上涨时才触发
         if inst.get("type") == "momentum":
             value = data.get("latest")
             threshold = inst.get("threshold")
             if value is None or threshold is None or threshold <= 0:
                 continue
-            if value >= threshold:
+            s_pct = data.get("silver_pct")
+            g_pct = data.get("gold_pct")
+            both_positive = (s_pct is not None and g_pct is not None and s_pct > 0 and g_pct > 0)
+            # 仅当两者均上涨（both positive）时，比值 >= 阈值才构成“银领涨”信号
+            if value >= threshold and both_positive:
                 if _in_cooldown(inst_id, alerts_log, cooldown, now):
                     continue
                 triggered.append((inst_id, value))
@@ -911,10 +962,11 @@ def main() -> int:
                     "triggered": True
                 })
             else:
+                reason = "（银金未同涨）" if (value >= threshold and not both_positive) else ""
                 alerts_log.append({
                     "time": now.strftime("%Y-%m-%d %H:%M"),
                     "inst_id": inst_id,
-                    "message": f"{inst['name']} {value:.2f} · 未触发",
+                    "message": f"{inst['name']} {value:.2f} · 未触发{reason}",
                     "triggered": False
                 })
             continue
