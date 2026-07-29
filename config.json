@@ -60,8 +60,8 @@
       "numerator": "comex_gold",
       "denominator": "comex_silver",
       "unit": "",
-      "threshold": 2.0,
       "band": [50, 55],
+      "band_alert": true,
       "enabled": true
     },
     {
