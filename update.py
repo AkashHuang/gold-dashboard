@@ -427,9 +427,9 @@ def _in_cooldown(inst_id: str, alerts_log: list, cooldown: timedelta, now: datet
 
 
 def build_alert_messages(config: dict, latest: dict, triggered: list[tuple]) -> list[dict]:
-    """构造待发送的提醒消息列表。"""
+    """构造待发送的提醒消息列表（每条触发指标一个元素，供合并发送 / 落盘用）。"""
     alerts = []
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    now_str = get_beijing_time().strftime("%Y-%m-%d %H:%M")
     for inst_id, change_pct in triggered:
         inst = next((i for i in config["instruments"] if i["id"] == inst_id), None)
         if not inst:
@@ -1144,12 +1144,15 @@ def main() -> int:
             "triggered": True
         })
 
-    # 发送 Server酱
+    # 发送 Server酱：每次刷新仅发 1 条合并消息（而非每个触发指标各发一条）
     pending_alerts = build_alert_messages(config, latest, triggered)
     if pending_alerts and config.get("notifiers", {}).get("serverchan", {}).get("enabled"):
         keys = config["notifiers"]["serverchan"].get("sendkeys", [])
-        for alert in pending_alerts:
-            send_serverchan(keys, alert["title"], alert["body"])
+        n = len(pending_alerts)
+        title = f"黄金看板提醒 · {n} 条预警"
+        header = f"本次刷新（{beijing_now:%Y-%m-%d %H:%M} 北京时间）共触发 {n} 条预警：\n"
+        body = header + "\n\n---\n\n".join(a["body"] for a in pending_alerts)
+        send_serverchan(keys, title, body)
 
     # 邮件提醒写入 pending，由 WorkBuddy automation 通过 agent-mail 发送
     save_json(ALERTS_PATH, pending_alerts)
