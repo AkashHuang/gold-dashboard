@@ -766,7 +766,8 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
         """)
 
     alerts_html = []
-    for alert in alerts_log[-20:]:
+    # 最新提醒置顶（倒序）：alerts_log 末尾为最新，[-20:] 取最近 20 条后再反转
+    for alert in alerts_log[-20:][::-1]:
         cls = "alert-triggered" if alert.get("triggered") else "alert-normal"
         alerts_html.append(f'<div class="{cls}">{alert["time"]} {alert["message"]}</div>')
     if not alerts_html:
