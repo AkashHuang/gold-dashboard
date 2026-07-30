@@ -690,7 +690,7 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
         if inst.get("type") == "momentum":
             change_color = "#e8e6e1"  # 比值用中性色，避免误读为涨跌
         else:
-            change_color = "#97c459" if (change_pct is not None and change_pct >= 0) else "#f09595"
+            change_color = "#f09595" if (change_pct is not None and change_pct >= 0) else "#97c459"  # 红涨绿跌（中国惯例）
         change_sign = "+" if (change_pct is not None and change_pct >= 0) else ""
         change_text = f"{change_sign}{change_pct:.2f}%" if change_pct is not None else "--"
 
