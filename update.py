@@ -996,7 +996,8 @@ def main() -> int:
             config.setdefault("notifiers", {}).setdefault("email", {})["recipients"] = [
                 x.strip() for x in em.split(",") if x.strip()
             ]
-    now = datetime.now()
+    # 统一用北京时间作为记录时间戳（CI runner 默认 UTC，否则 alert 记录会比仪表板头部慢 8 小时）
+    now = datetime.now(BEIJING_TZ).replace(tzinfo=None)
     beijing_now = get_beijing_time()
 
     # 活跃时段守卫：不在窗口内则跳过整轮刷新（保留旧数据，避免误报）
