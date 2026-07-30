@@ -2,7 +2,7 @@
   "instruments": {
     "comex_gold": {
       "high": 4158.0,
-      "low": 4108.6
+      "low": 4107.6
     },
     "comex_silver": {
       "high": 58.89,
@@ -20,7 +20,7 @@
     },
     "fx": {},
     "comex_ratio": {
-      "high": 71.25671693534409,
+      "high": 71.27222270401526,
       "low": 69.2517356646953
     },
     "silver_gold_momentum": {},
