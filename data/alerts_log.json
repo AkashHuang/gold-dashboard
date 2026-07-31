@@ -1,47 +1,5 @@
 [
   {
-    "time": "2026-07-31 05:57",
-    "inst_id": "comex_gold",
-    "message": "COMEX 黄金 +0.00% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-31 05:57",
-    "inst_id": "comex_silver",
-    "message": "COMEX 白银 +0.00% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-31 05:57",
-    "inst_id": "comex_ratio",
-    "message": "美金银比 70.50 · 未进入区间[50,55]",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-31 05:57",
-    "inst_id": "london_gold",
-    "message": "伦敦金 +0.22% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-31 05:57",
-    "inst_id": "london_silver",
-    "message": "伦敦银 +1.05% · 已触发",
-    "triggered": true
-  },
-  {
-    "time": "2026-07-31 05:57",
-    "inst_id": "shanghai_gold",
-    "message": "上海黄金 AU99.99 +0.00% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-07-31 05:57",
-    "inst_id": "shanghai_silver",
-    "message": "上海白银 +0.00% · 未触发",
-    "triggered": false
-  },
-  {
     "time": "2026-07-31 07:01",
     "inst_id": "comex_gold",
     "message": "COMEX 黄金 +0.19% · 未触发",
@@ -583,6 +541,42 @@
   },
   {
     "time": "2026-08-01 05:55",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-01 06:51",
+    "inst_id": "comex_ratio",
+    "message": "美金银比 70.94 · 未进入区间[50,55]",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-01 06:51",
+    "inst_id": "silver_gold_momentum",
+    "message": "金银涨幅比 1.41 · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-01 06:51",
+    "inst_id": "london_gold",
+    "message": "伦敦金 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-01 06:51",
+    "inst_id": "london_silver",
+    "message": "伦敦银 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-01 06:51",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 +0.00% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-01 06:51",
     "inst_id": "shanghai_silver",
     "message": "上海白银 +0.00% · 未触发",
     "triggered": false
