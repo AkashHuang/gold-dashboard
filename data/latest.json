@@ -1,35 +1,35 @@
 {
   "_meta": {
-    "updated_at": "2026-08-03T05:43:34.629047"
+    "updated_at": "2026-08-03T06:43:45.171947"
   },
   "comex_gold": {
-    "latest": 4098.6,
-    "prev_close": 4160.6,
-    "open": 4163.9,
-    "high": 4170.7,
-    "low": 4076.4,
-    "change_pct": -1.49,
-    "volume": 106211.0,
+    "latest": 4124.0,
+    "prev_close": 4107.0,
+    "open": 4135.2,
+    "high": 4145.5,
+    "low": 4120.4,
+    "change_pct": 0.41,
+    "volume": 3430.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "latest": 57.775,
-    "prev_close": 59.017,
-    "open": 59.26,
-    "high": 59.405,
-    "low": 57.22,
-    "change_pct": -2.1,
-    "volume": 27280.0,
+    "latest": 58.66,
+    "prev_close": 57.786,
+    "open": 58.65,
+    "high": 58.88,
+    "low": 58.46,
+    "change_pct": 1.51,
+    "volume": 833.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4046.42,
-    "change_pct": 0.0,
+    "latest": 4067.58,
+    "change_pct": 0.5229313813197802,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "latest": 57.63,
-    "change_pct": 0.0,
+    "latest": 58.45,
+    "change_pct": 1.4228700329689403,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -61,29 +61,29 @@
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 70.94071830376461,
-    "prev_close": 70.49833098937594,
-    "change_pct": 0.6275145924452249,
+    "latest": 70.30344357313331,
+    "prev_close": 71.07257813311182,
+    "change_pct": -1.0821818768667697,
     "high": 71.34535367545077,
     "low": 69.2517356646953
   },
   "silver_gold_momentum": {
     "_error": null,
-    "latest": 1.4093959731543624,
-    "silver_pct": -2.1,
-    "gold_pct": -1.49,
+    "latest": 3.682926829268293,
+    "silver_pct": 1.51,
+    "gold_pct": 0.41,
     "change_pct": null
   },
   "london_ratio": {
     "_error": null,
-    "latest": 70.2137775464168,
+    "latest": 69.59076133447391,
     "change_pct": null,
     "high": 70.62346760070052,
     "low": 69.43161814488829
   },
   "shanghai_gold_night": {
-    "latest": 903.2435397945569,
-    "prev_close": 903.190033275998,
+    "latest": 891.6072724934492,
+    "prev_close": 891.5544552863826,
     "change_pct": null,
     "high": 903.2435397945569,
     "low": 872.8189727844133,
