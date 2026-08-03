@@ -688,7 +688,10 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
         status_class = "status-open" if mkt_open else "status-closed"
 
         if inst.get("type") == "momentum":
-            change_color = "#e8e6e1"  # 比值用中性色，避免误读为涨跌
+            # 触发阈值时红色高亮，否则中性灰（避免误读为涨跌）
+            thr = inst.get("threshold", 2.0)
+            momentum_triggered = latest_price is not None and latest_price >= thr
+            change_color = "#f09595" if momentum_triggered else "#e8e6e1"
         else:
             change_color = "#f09595" if (change_pct is not None and change_pct >= 0) else "#97c459"  # 红涨绿跌（中国惯例）
         change_sign = "+" if (change_pct is not None and change_pct >= 0) else ""
@@ -725,12 +728,18 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
         unit_label = f" / {unit}" if unit else ""
         header = f"{name}{unit_label}"
 
-        # 卡片边框高亮（比值处于参考区间）
+        # 卡片边框高亮（比值处于参考区间 / 涨幅比触发阈值）
         in_band = False
         if inst.get("band") and latest_price is not None:
             band_lo, band_hi = inst["band"]
             in_band = band_lo <= latest_price <= band_hi
-        card_class = "card in-band" if in_band else "card"
+        momentum_triggered = inst.get("type") == "momentum" and latest_price is not None and latest_price >= inst.get("threshold", 2.0)
+        if momentum_triggered:
+            card_class = "card momentum-triggered"
+        elif in_band:
+            card_class = "card in-band"
+        else:
+            card_class = "card"
 
         # 阈值 / 参考标签
         if inst.get("band"):
@@ -828,6 +837,10 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
     }}
     .card.in-band {{
       border-color: rgba(151,196,89,0.6);
+    }}
+    .card.momentum-triggered {{
+      border-color: rgba(240,149,149,0.7);
+      box-shadow: 0 0 8px rgba(240,149,149,0.15);
     }}
     .card-left {{
       display: flex;
