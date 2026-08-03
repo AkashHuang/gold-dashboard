@@ -1102,6 +1102,12 @@ def main() -> int:
             in_band = band_lo <= value <= band_hi
             if in_band:
                 if _in_cooldown(inst_id, alerts_log, cooldown, now):
+                    alerts_log.append({
+                        "time": now.strftime("%Y-%m-%d %H:%M"),
+                        "inst_id": inst_id,
+                        "message": f"{inst['name']} {value:.2f} · 区间[{band_lo},{band_hi}]·冷却中",
+                        "triggered": False
+                    })
                     continue
                 triggered.append((inst_id, value))
                 alerts_log.append({
@@ -1131,6 +1137,12 @@ def main() -> int:
             # 仅当两者均上涨（both positive）时，比值 >= 阈值才构成“银领涨”信号
             if value >= threshold and both_positive:
                 if _in_cooldown(inst_id, alerts_log, cooldown, now):
+                    alerts_log.append({
+                        "time": now.strftime("%Y-%m-%d %H:%M"),
+                        "inst_id": inst_id,
+                        "message": f"{inst['name']} {value:.2f} · 已触发(≥{threshold})·冷却中",
+                        "triggered": False
+                    })
                     continue
                 triggered.append((inst_id, value))
                 alerts_log.append({
@@ -1164,6 +1176,12 @@ def main() -> int:
             continue
 
         if _in_cooldown(inst_id, alerts_log, cooldown, now):
+            alerts_log.append({
+                "time": now.strftime("%Y-%m-%d %H:%M"),
+                "inst_id": inst_id,
+                "message": f"{inst['name']} {format_change_pct(change_pct)} · 已触发·冷却中",
+                "triggered": False
+            })
             continue
 
         triggered.append((inst_id, change_pct))
