@@ -1001,6 +1001,10 @@ def main() -> int:
     now = datetime.now(BEIJING_TZ).replace(tzinfo=None)
     beijing_now = get_beijing_time()
 
+    # 全市场休市判定：四个市场全部休市时价格为静态值，后续运行无需重复推送提醒
+    ALL_MARKETS = ("comex", "london", "sge", "fx")
+    all_markets_closed = not any(is_market_open(m, beijing_now) for m in ALL_MARKETS)
+
     # 活跃时段守卫：不在窗口内则跳过整轮刷新（保留旧数据，避免误报）
     active_hours = config.get("active_hours")
     if not is_active_now(active_hours, beijing_now):
@@ -1024,7 +1028,8 @@ def main() -> int:
     snap = market_data.get_snapshot(prev_snapshot)
 
     # 两遍：先 data，再 ratio/computed（确保依赖可用）
-    latest: dict = {"_meta": {"updated_at": now.isoformat()}}
+    latest: dict = {"_meta": {"updated_at": now.isoformat(),
+                             "all_markets_closed": all_markets_closed}}
     for inst in config["instruments"]:
         if not inst.get("enabled", True):
             continue
@@ -1157,14 +1162,21 @@ def main() -> int:
         })
 
     # 发送 Server酱：每次刷新仅发 1 条合并消息（而非每个触发指标各发一条）
+    # 全休市门控：若本轮全市场休市、且上一轮亦全休市，则提醒内容必与前次相同，抑制推送避免重复
     pending_alerts = build_alert_messages(config, latest, triggered)
+    prev_all_closed = bool(prev_snapshot.get("_meta", {}).get("all_markets_closed", False))
+    suppress_alerts = all_markets_closed and prev_all_closed
+    print(f"全市场休市判定: 本轮={all_markets_closed} 上一轮={prev_all_closed} 提醒抑制={suppress_alerts}")
     if pending_alerts and config.get("notifiers", {}).get("serverchan", {}).get("enabled"):
-        keys = config["notifiers"]["serverchan"].get("sendkeys", [])
-        n = len(pending_alerts)
-        title = f"黄金看板提醒 · {n} 条预警"
-        header = f"本次刷新（{beijing_now:%Y-%m-%d %H:%M} 北京时间）共触发 {n} 条预警：\n"
-        body = header + "\n\n---\n\n".join(a["body"] for a in pending_alerts)
-        send_serverchan(keys, title, body)
+        if suppress_alerts:
+            print("全市场休市且上一轮亦休市，抑制 ServerChan 提醒（内容同前次，避免重复推送）。")
+        else:
+            keys = config["notifiers"]["serverchan"].get("sendkeys", [])
+            n = len(pending_alerts)
+            title = f"黄金看板提醒 · {n} 条预警"
+            header = f"本次刷新（{beijing_now:%Y-%m-%d %H:%M} 北京时间）共触发 {n} 条预警：\n"
+            body = header + "\n\n---\n\n".join(a["body"] for a in pending_alerts)
+            send_serverchan(keys, title, body)
 
     # 邮件提醒写入 pending，由 WorkBuddy automation 通过 agent-mail 发送
     save_json(ALERTS_PATH, pending_alerts)
