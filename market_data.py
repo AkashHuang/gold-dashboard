@@ -161,20 +161,36 @@ def fetch_gtimg():
 
 
 def fetch_sge():
+    """上海黄金交易所行情。
+
+    接口 /graph/quotations 返回滚动时间序列（data 数组，时间跨度约昨 20:00 夜盘开盘
+    至当日 15:30 日盘收盘），**不提供「昨收」字段**。因此：
+      - latest = data[-1]（最新 tick）
+      - 涨跌% 以序列起点 data[0]（夜盘开盘价）为基准推算，存为 change_pct，
+        并在 update.py 渲染时标注为「开盘」而非「昨收」，避免误导。
+      - prev_close 同样填 data[0]（供「开盘」展示复用，非真实昨收）。
+    """
     result = {}
     for key, instid in SGE_CODES.items():
         try:
             data = urllib.parse.urlencode({"instid": instid}).encode("utf-8")
             raw = _http_get(SGE_URL, headers=SGE_HEADERS, data=data, method="POST", timeout=15, retries=3)
             j = json.loads(raw)
-            series = j.get("data") or []
-            price = _to_float(series[-1]) if series else None
+            series = [_to_float(x) for x in (j.get("data") or [])]
+            series = [p for p in series if p is not None]
+            latest = series[-1] if series else None
+            open_price = series[0] if series else None   # 序列起点 ≈ 昨 20:00 夜盘开盘
+            change_pct = None
+            if latest is not None and open_price:
+                change_pct = (latest - open_price) / open_price * 100
             result[key] = {
-                "latest": price,
+                "latest": latest,
+                "prev_close": open_price,   # 用作展示基准（渲染标注为「开盘」）
                 "high": _to_float(j.get("max")),
                 "low": _to_float(j.get("min")),
                 "update_time": j.get("delaystr"),
                 "source": "sge.com.cn",
+                "change_pct": change_pct,
             }
         except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError, ValueError, KeyError, IndexError) as e:
             result[key] = {"latest": None, "source": "sge.com.cn", "error": str(e)}
