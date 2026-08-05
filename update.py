@@ -706,7 +706,9 @@ def render_dashboard(config: dict, latest: dict, alerts_log: list, run_time: dat
             vol_label = f" {volume_unit}" if volume_unit else ""
             sub_info = f"成交量 {format_int(int(volume))}{vol_label}"
         elif prev_close is not None:
-            sub_info = f"昨收 {format_price(prev_close)}"
+            # SGE 数据源无「昨收」，基准实为夜盘开盘价，标注为「开盘」避免误导
+            base_label = "开盘" if inst.get("source") == "sge" else "昨收"
+            sub_info = f"{base_label} {format_price(prev_close)}"
         else:
             sub_info = ""
 
