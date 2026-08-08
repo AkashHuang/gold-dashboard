@@ -1,37 +1,19 @@
 {
   "_meta": {
-    "updated_at": "2026-08-08T12:02:45.474204",
+    "updated_at": "2026-08-08T13:13:27.111904",
     "all_markets_closed": true
   },
   "comex_gold": {
-    "latest": 4401.3,
-    "prev_close": 4299.6,
-    "open": 4298.3,
-    "high": 4432.3,
-    "low": 4288.0,
-    "change_pct": 2.37,
-    "volume": 182381.0,
-    "source": "qt.gtimg.cn"
+    "_error": "行情获取失败或无数据"
   },
   "comex_silver": {
-    "latest": 63.8,
-    "prev_close": 61.606,
-    "open": 61.855,
-    "high": 65.48,
-    "low": 61.42,
-    "change_pct": 3.56,
-    "volume": 62570.0,
-    "source": "qt.gtimg.cn"
+    "_error": "行情获取失败或无数据"
   },
   "london_gold": {
-    "latest": 4341.12,
-    "change_pct": 0.0,
-    "source": "qt.gtimg.cn"
+    "_error": "行情获取失败或无数据"
   },
   "london_silver": {
-    "latest": 63.52,
-    "change_pct": 0.0,
-    "source": "qt.gtimg.cn"
+    "_error": "行情获取失败或无数据"
   },
   "shanghai_gold": {
     "latest": 928.47,
@@ -52,45 +34,19 @@
     "source": "sge.com.cn"
   },
   "fx": {
-    "usdcny": {
-      "latest": 6.7453,
-      "prev_close": 6.7508,
-      "open": 6.7493,
-      "high": 6.75,
-      "low": 6.7453,
-      "change_pct": -0.08,
-      "source": "qt.gtimg.cn"
-    }
+    "_error": "行情获取失败或无数据"
   },
   "comex_ratio": {
-    "_error": null,
-    "latest": 68.98589341692791,
-    "prev_close": 69.79190338603384,
-    "change_pct": -1.1548760386254506,
-    "high": 71.34535367545077,
-    "low": 67.52338977808705
+    "_error": "缺少 comex_gold 或 comex_silver 的价格"
   },
   "silver_gold_momentum": {
-    "_error": null,
-    "latest": 1.50210970464135,
-    "silver_pct": 3.56,
-    "gold_pct": 2.37,
-    "change_pct": null
+    "_error": "缺少 comex_silver 或 comex_gold 的涨跌幅"
   },
   "london_ratio": {
-    "_error": null,
-    "latest": 68.3425692695214,
-    "change_pct": null,
-    "high": 70.62346760070052,
-    "low": 66.97124203326598
+    "_error": "缺少 london_gold 或 london_silver 的价格"
   },
   "shanghai_gold_night": {
-    "latest": 954.4935100551386,
-    "prev_close": 933.1985043483853,
-    "change_pct": 2.281937402120325,
-    "high": 956.7706058803672,
-    "low": 872.8189727844133,
-    "market_state": "实时估算"
+    "_error": "缺少 COMEX 黄金或 USDCNY 行情"
   },
   "shanghai_ratio": {
     "_error": null,

@@ -1,18 +1,6 @@
 [
   {
     "time": "2026-08-07 19:13",
-    "inst_id": "silver_gold_momentum",
-    "message": "金银涨幅比 2.62 · 已触发(≥2.0)·冷却中",
-    "triggered": false
-  },
-  {
-    "time": "2026-08-07 19:13",
-    "inst_id": "london_gold",
-    "message": "伦敦金 +0.29% · 未触发",
-    "triggered": false
-  },
-  {
-    "time": "2026-08-07 19:13",
     "inst_id": "london_silver",
     "message": "伦敦银 -0.14% · 未触发",
     "triggered": false
@@ -595,6 +583,18 @@
   },
   {
     "time": "2026-08-08 12:02",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 -0.01% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-08 13:13",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 -0.21% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-08 13:13",
     "inst_id": "shanghai_silver",
     "message": "上海白银 -0.01% · 未触发",
     "triggered": false
