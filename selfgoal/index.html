@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Self-Goal Management</title>
+<style>
+  :root{
+    --primary:#15B8A6;
+    --primary-dark:#0E8C7E;
+    --ink:#1f2937;
+    --muted:#6b7280;
+    --line:#e5e7eb;
+    --bg:#f4f6f8;
+    --card:#ffffff;
+    --red:#ef4444;
+    --green:#10b981;
+    --amber:#f59e0b;
+    --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);
+    font-size:16px;line-height:1.5;
+    padding-bottom:24px;
+  }
+  .wrap{max-width:960px;margin:0 auto;padding:16px;}
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:12px;margin-bottom:14px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand .logo{width:38px;height:38px;border-radius:10px;background:var(--primary);
+    display:flex;align-items:center;justify-content:center;}
+  .brand h1{font-size:19px;margin:0;font-weight:700;}
+  .brand p{margin:0;font-size:12px;color:var(--muted);}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;}
+  button{
+    font-family:inherit;font-size:15px;cursor:pointer;
+    border:none;border-radius:9px;min-height:44px;padding:0 16px;
+    background:var(--primary);color:#fff;font-weight:600;
+    transition:filter .15s;
+  }
+  button:hover{filter:brightness(1.05);}
+  button.ghost{background:#fff;color:var(--ink);border:1px solid var(--line);font-weight:500;}
+  button.danger{background:#fff;color:var(--red);border:1px solid var(--red);font-weight:500;}
+  button.mini{min-height:36px;padding:0 12px;font-size:14px;border-radius:8px;}
+
+  .card{background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px;}
+  .card h2{font-size:16px;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .card h2 svg{width:20px;height:20px;}
+
+  /* today zone */
+  .today{background:linear-gradient(135deg,#0E8C7E,#15B8A6);color:#fff;}
+  .today h2{color:#fff;}
+  .titem{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.14);
+    border-radius:10px;padding:10px 12px;margin-bottom:8px;}
+  .titem:last-child{margin-bottom:0;}
+  .titem .tag{font-size:12px;font-weight:700;padding:2px 8px;border-radius:20px;background:rgba(255,255,255,.25);white-space:nowrap;}
+  .titem.overdue .tag{background:var(--red);}
+  .titem .txt{flex:1;font-size:14px;}
+  .titem button{background:#fff;color:var(--primary-dark);min-height:38px;padding:0 12px;font-size:14px;}
+
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
+  label.field{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);}
+  input,select{
+    font-family:inherit;font-size:16px;padding:10px 12px;border:1px solid var(--line);
+    border-radius:9px;background:#fff;color:var(--ink);width:100%;min-height:44px;
+  }
+  input:focus,select:focus{outline:none;border-color:var(--primary);}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:10px;}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;}
+  .seg button{border-radius:0;min-height:44px;background:#fff;color:var(--muted);border:none;border-right:1px solid var(--line);}
+  .seg button:last-child{border-right:none;}
+  .seg button.on{background:var(--primary);color:#fff;}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;}
+  th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);}
+  th{color:var(--muted);font-weight:600;font-size:13px;}
+  .del{background:#fff;border:1px solid var(--line);color:var(--muted);min-height:32px;padding:0 10px;font-size:13px;border-radius:7px;}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:12px;}
+  .stat{background:var(--bg);border-radius:10px;padding:12px;text-align:center;}
+  .stat .v{font-size:20px;font-weight:700;}
+  .stat .l{font-size:12px;color:var(--muted);margin-top:2px;}
+
+  .charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;}
+  .chartbox{background:var(--bg);border-radius:10px;padding:10px;text-align:center;}
+  .chartbox .ct{font-size:13px;color:var(--muted);margin-bottom:4px;}
+
+  .banner{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;
+    border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:14px;}
+
+  /* tabs */
+  .tabs{display:flex;gap:6px;background:#fff;border-radius:12px;padding:6px;box-shadow:var(--shadow);margin-bottom:14px;}
+  .tabs button{flex:1;background:transparent;color:var(--muted);min-height:44px;font-weight:600;font-size:14px;}
+  .tabs button.on{background:var(--primary);color:#fff;}
+  .panel{display:none;}
+  .panel.on{display:block;}
+
+  .hint{font-size:12px;color:var(--muted);margin-top:8px;}
+  .mt{margin-top:12px;}
+
+  /* targets */
+  .target{border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;}
+  .target .th{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+  .target .tdesc{font-weight:700;font-size:15px;}
+  .badge{font-size:12px;padding:2px 9px;border-radius:20px;background:var(--bg);color:var(--muted);font-weight:600;}
+  .badge.work{background:#eef2ff;color:#4f46e5;}
+  .badge.private{background:#ecfdf5;color:#059669;}
+  .progress{font-size:13px;color:var(--muted);margin:6px 0;}
+  .subtask{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);}
+  .subtask input[type=checkbox]{width:24px;height:24px;min-height:24px;flex:none;}
+  .subtask .smain{flex:1;}
+  .subtask .sdesc{font-size:14px;}
+  .subtask.done .sdesc{text-decoration:line-through;color:var(--muted);}
+  .subtask .sdate{font-size:12px;color:var(--muted);}
+  .subtask .sdone{font-size:12px;color:var(--green);}
+  .draft-row{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap;}
+  .draft-row input{flex:1;min-width:120px;}
+  .addSub{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px;}
+  .addSub .asDesc{flex:1;min-width:120px;}
+  .addSub .asBtn{min-height:44px;padding:0 16px;border:none;border-radius:8px;background:var(--primary);color:#fff;font-size:14px;font-weight:600;flex:none;}
+  .addSub .asBtn:active{opacity:.85;}
+
+  @media(max-width:768px){
+    .wrap{padding:12px;}
+    .tabs{position:fixed;left:0;right:0;bottom:0;margin:0;border-radius:0;
+      padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:50;}
+    body{padding-bottom:78px;}
+    header.top{flex-direction:column;align-items:stretch;}
+    .toolbar{justify-content:flex-end;}
+    .brand p{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M12 2C12 2 5 9 5 14a7 7 0 0014 0c0-5-7-12-7-12z"/></svg>
+      </div>
+      <div>
+        <h1>Self-Goal Management</h1>
+        <p>健康打卡 · 用药管理 · 目标拆解</p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button class="ghost mini" id="btnExport">导出 JSON</button>
+      <button class="ghost mini" id="btnImport">导入恢复</button>
+      <button class="danger mini" id="btnClear">清空示例</button>
+      <input type="file" id="fileInput" accept="application/json" style="display:none">
+    </div>
+  </header>
+
+  <div id="backupBanner" class="banner" style="display:none"></div>
+
+  <!-- 今天要处理 -->
+  <div class="card today">
+    <h2>
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2a7 7 0 00-7 7v4l-2 3v1h18v-1l-2-3V9a7 7 0 00-7-7zm0 20a3 3 0 003-3H9a3 3 0 003 3z"/></svg>
+      今天要处理
+    </h2>
+    <div id="todayList"></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button data-tab="health" class="on">健康打卡</button>
+    <button data-tab="meds">用药管理</button>
+    <button data-tab="targets">目标管理</button>
+  </div>
+
+  <!-- Module 1: 健康打卡 -->
+  <section class="panel on" id="p-health">
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        每日健康打卡
+      </h2>
+      <div class="form-grid">
+        <label class="field">日期
+          <input type="date" id="hDate">
+        </label>
+        <label class="field">睡眠（小时）
+          <input type="number" id="hSleep" min="0" max="24" step="0.5" placeholder="如 7.5">
+        </label>
+        <label class="field">运动（分钟）
+          <input type="number" id="hExercise" min="0" max="600" step="5" placeholder="如 30">
+        </label>
+        <label class="field">用药（次）
+          <input type="number" id="hMedicine" min="0" max="30" step="1" placeholder="如 2">
+        </label>
+        <label class="field">心情
+          <select id="hMode">
+            <option value="">选择</option>
+            <option value="happy">开心</option>
+            <option value="soso">一般</option>
+            <option value="bad">低落</option>
+          </select>
+        </label>
+        <label class="field" style="grid-column:1/-1">备注
+          <input type="text" id="hNote" placeholder="可选">
+        </label>
+      </div>
+      <div class="row">
+        <button id="hSave">保存打卡</button>
+        <button class="ghost" id="hReset">清空表单</button>
+      </div>
+      <p class="hint">提示：睡眠/运动/用药填 0 视为当天漏打卡。</p>
+    </div>
+
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M3 13h4l3 7 4-14 3 7h4" stroke="var(--primary)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        本周趋势（近 7 天）
+      </h2>
+      <div class="charts" id="weekCharts"></div>
+    </div>
+
+    <div class="card">
+      <h2>打卡记录</h2>
+      <div style="overflow-x:auto">
+        <table id="hTable">
+          <thead><tr><th>日期</th><th>睡眠</th><th>运动</th><th>用药</th><th>心情</th><th>备注</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module 2: 目标管理 -->
+  <section class="panel" id="p-targets">
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M12 2l2.4 7.4H22l-6 4.3 2.3 7.3L12 16.7 5.7 21l2.3-7.3-6-4.3h7.6z" stroke="var(--primary)" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg>
+        新建目标
+      </h2>
+      <div class="form-grid">
+        <label class="field">目标日期
+          <input type="date" id="tDate">
+        </label>
+        <label class="field">目标类型
+          <div class="seg" id="tType">
+            <button data-v="private" class="on">私人</button>
+            <button data-v="work">工作</button>
+          </div>
+        </label>
+        <label class="field" style="grid-column:1/-1">目标描述
+          <input type="text" id="tDesc" placeholder="想达成什么？">
+        </label>
+      </div>
+      <div class="mt">
+        <div style="font-size:13px;color:var(--muted);margin-bottom:6px;">拆解子任务</div>
+        <div id="tTasks"></div>
+        <button class="ghost mini" id="tAddTask">+ 添加子任务</button>
+      </div>
+      <div class="row">
+        <button id="tSave">保存目标</button>
+        <button class="ghost" id="tClearDraft">清空草稿</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>我的目标</h2>
+      <div id="targetList"></div>
+    </div>
+  </section>
+
+  <!-- Module 3: 用药管理 -->
+  <section class="panel" id="p-meds">
+    <div class="card">
+      <h2>
+        <svg viewBox="0 0 24 24" fill="var(--primary)"><path d="M6 2h12a2 2 0 012 2v3a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zM4 9h16v11a3 3 0 01-3 3H7a3 3 0 01-3-3V9z"/><rect x="9" y="13" width="6" height="2" rx="1" fill="#fff"/></svg>
+        添加药品
+      </h2>
+      <div class="form-grid">
+        <label class="field">药名
+          <input type="text" id="mName" placeholder="如 二甲双胍">
+        </label>
+        <label class="field">每日用量（粒）
+          <input type="number" id="mDose" min="0" max="50" step="1" placeholder="如 2">
+        </label>
+        <label class="field">库存（粒）
+          <input type="number" id="mInv" min="0" max="9999" step="1" placeholder="如 30">
+        </label>
+        <label class="field" style="grid-column:1/-1">说明
+          <input type="text" id="mDesc" placeholder="如 餐后服用 / 早餐后 1 粒">
+        </label>
+      </div>
+      <div class="row">
+        <button id="mSave">添加药品</button>
+        <button class="ghost" id="mReset">清空表单</button>
+      </div>
+      <p class="hint">补货截止日 = 今天 + ⌊库存 ÷ 每日用量⌋ 天；用量未填或 0 时无法计算。</p>
+    </div>
+
+    <div class="card">
+      <h2>我的药品</h2>
+      <div id="medList"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var PREFIX="wb_selfgoal_";
+  var K_H=PREFIX+"health", K_T=PREFIX+"targets", K_M=PREFIX+"meds", K_SEED=PREFIX+"seeded";
+  var MODE={happy:["开心","var(--green)"],soso:["一般","var(--amber)"],bad:["低落","var(--red)"]};
+  var CAT_WORK=["私人","工作"];
+
+  function $(id){return document.getElementById(id);}
+  function todayStr(){var d=new Date();return fmt(d);}
+  function fmt(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());}
+  function pad(n){return n<10?"0"+n:""+n;}
+  function load(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
+  function save(k,v){localStorage.setItem(k,JSON.stringify(v));}
+  function isComplete(h){return (h.sleep>0)||(h.exercise>0)||(h.medicine>0);}
+  function rid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+  function modeBadge(m){if(!MODE[m])return '<span style="color:var(--muted)">-</span>';return '<span style="color:'+MODE[m][1]+'">'+MODE[m][0]+'</span>';}
+
+  var health=load(K_H,null);
+  var targets=load(K_T,null);
+  var meds=load(K_M,null);
+
+  function seed(){
+    if(localStorage.getItem(K_SEED))return;
+    var t=new Date();
+    function d(n){var x=new Date(t);x.setDate(t.getDate()+n);return fmt(x);}
+    health=[
+      {date:d(-4),sleep:7.5,exercise:30,medicine:2,mode:"happy",note:""},
+      {date:d(-3),sleep:8,exercise:45,medicine:2,mode:"happy",note:"跑步"},
+      {date:d(-2),sleep:6.5,exercise:20,medicine:1,mode:"soso",note:""},
+      {date:d(-1),sleep:0,exercise:0,medicine:0,mode:"",note:"漏打卡"}
+    ];
+    targets=[
+      {id:rid(),date:d(10),desc:"完成季度复盘报告",type:"work",tasks:[
+        {id:rid(),desc:"收集各部门数据",date:d(1),done:false,doneDate:null},
+        {id:rid(),desc:"撰写初稿",date:d(2),done:false,doneDate:null},
+        {id:rid(),desc:"组织内部评审",date:d(-1),done:false,doneDate:null}
+      ]},
+      {id:rid(),date:d(20),desc:"预约年度体检",type:"private",tasks:[
+        {id:rid(),desc:"电话预约医院",date:d(3),done:false,doneDate:null},
+        {id:rid(),desc:"整理过往报告",date:d(0),done:true,doneDate:d(0)}
+      ]}
+    ];
+    meds=[
+      {id:rid(),name:"示例药品A（可删）",desc:"餐后服用",dose:2,inventory:30},
+      {id:rid(),name:"示例药品B（可删）",desc:"早餐后1粒",dose:1,inventory:5}
+    ];
+    save(K_H,health);save(K_T,targets);save(K_M,meds);localStorage.setItem(K_SEED,"1");
+  }
+
+  // ---------- today zone ----------
+  function renderToday(){
+    var box=$("todayList");box.innerHTML="";
+    var t=todayStr();
+    var items=[];
+    var today=health.filter(function(h){return h.date===t;})[0];
+    if(!today||!isComplete(today)){
+      items.push({cls:"",tag:"今日",txt:"今天还没打卡（睡眠/运动/用药）",act:"去打卡",go:"health",prefill:t});
+    }
+    var past=health.filter(function(h){return h.date<t&&!isComplete(h);}).sort(function(a,b){return a.date<b.date?1:-1;});
+    if(past.length){
+      items.push({cls:"overdue",tag:"逾期",txt:past[0].date+" 漏打卡，已顺延到今天",act:"补打卡",go:"health",prefill:past[0].date});
+    }
+    // 目标子任务：近 3 天内到期（含逾期）且未完成
+    var win=new Date();win.setDate(win.getDate()+3);var winStr=fmt(win);
+    targets.forEach(function(tg){
+      tg.tasks.forEach(function(ts){
+        if(!ts.done && ts.date<=winStr){
+          var od=ts.date<t;
+          items.push({cls:od?"overdue":"",tag:od?"逾期":"近期",
+            txt:esc(tg.desc)+" · "+esc(ts.desc)+"（"+ts.date+"）",act:"看目标",go:"targets"});
+        }
+      });
+    });
+    // 药品：7 天内需补货或已缺货
+    meds.forEach(function(m){
+      var ri=refillInfo(m);
+      if(ri.level==="soon"||ri.level==="out"){
+        var od=ri.level==="out";
+        items.push({cls:od?"overdue":"",tag:od?"缺货":"补货",
+          txt:esc(m.name)+" · 补货截止 "+ri.date,act:"去用药",go:"meds"});
+      }
+    });
+    if(!items.length){box.innerHTML='<div class="titem"><div class="txt">今天都搞定了，继续保持</div></div>';return;}
+    items.forEach(function(it){
+      var el=document.createElement("div");
+      el.className="titem"+(it.cls?" "+it.cls:"");
+      el.innerHTML='<span class="tag">'+it.tag+'</span><span class="txt">'+it.txt+'</span>';
+      var btn=document.createElement("button");btn.textContent=it.act;
+      btn.onclick=function(){
+        switchTab(it.go);
+        if(it.prefill)$("hDate").value=it.prefill;
+        var panel=it.go==="health"?$("p-health"):it.go==="targets"?$("p-targets"):$("p-meds");
+        window.scrollTo({top:panel.offsetTop-10,behavior:"smooth"});
+      };
+      el.appendChild(btn);box.appendChild(el);
+    });
+  }
+
+  // ---------- health ----------
+  function renderHealth(){
+    var tb=$("hTable").querySelector("tbody");tb.innerHTML="";
+    health.slice().sort(function(a,b){return a.date<b.date?1:-1;}).forEach(function(h){
+      var tr=document.createElement("tr");
+      var done=isComplete(h);
+      tr.innerHTML="<td>"+h.date+(done?"":" <span style='color:var(--red);font-size:12px'>漏</span>")+"</td>"+
+        "<td>"+h.sleep+"</td><td>"+h.exercise+"</td><td>"+h.medicine+"</td>"+
+        "<td>"+modeBadge(h.mode)+"</td><td>"+(h.note||"")+"</td>";
+      var td=document.createElement("td");
+      var b=document.createElement("button");b.className="del";b.textContent="删除";
+      b.onclick=function(){if(confirm("删除这条打卡？")){health=health.filter(function(x){return x!==h;});save(K_H,health);renderAll();}};
+      td.appendChild(b);tr.appendChild(td);tb.appendChild(tr);
+    });
+    renderWeek();
+  }
+  function last7(){
+    var arr=[];var t=new Date();
+    for(var i=6;i>=0;i--){var x=new Date(t);x.setDate(t.getDate()-i);arr.push(fmt(x));}
+    return arr;
+  }
+  function renderWeek(){
+    var days=last7();var map={};health.forEach(function(h){map[h.date]=h;});
+    var wrap=$("weekCharts");wrap.innerHTML="";
+    [{key:"sleep",name:"睡眠(h)",color:"#6366f1"},
+     {key:"exercise",name:"运动(min)",color:"#15B8A6"},
+     {key:"medicine",name:"用药(次)",color:"#ef4444"}].forEach(function(def){
+      var vals=days.map(function(d){var h=map[d];return h?h[def.key]:0;});
+      var max=Math.max.apply(null,vals.concat([1]));
+      var box=document.createElement("div");box.className="chartbox";
+      box.innerHTML='<div class="ct">'+def.name+'</div>'+barSVG(days,vals,max,def.color);
+      wrap.appendChild(box);
+    });
+  }
+  function barSVG(labels,vals,max,color){
+    var W=170,H=120,pad=22,bw=W/labels.length-6;
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" height="120">';
+    for(var i=0;i<labels.length;i++){
+      var v=vals[i],h=(v/max)*(H-pad-10);
+      var x=i*(W/labels.length)+3,y=H-pad-h;
+      var lx=x+bw/2,ly=H-pad+10;
+      svg+='<rect x="'+x+'" y="'+y+'" width="'+bw+'" height="'+h+'" rx="3" fill="'+color+'" opacity="'+(v>0?1:.25)+'"/>';
+      svg+='<text x="'+lx+'" y="'+ly+'" font-size="8" fill="#6b7280" text-anchor="end" transform="rotate(-45, '+lx+', '+ly+')">'+labels[i].slice(5)+'</text>';
+      if(v>0)svg+='<text x="'+(x+bw/2)+'" y="'+(y-3)+'" font-size="9" fill="#374151" text-anchor="middle">'+v+'</text>';
+    }
+    svg+='</svg>';return svg;
+  }
+
+  // ---------- targets ----------
+  var curType="private";
+  var draftTasks=[];
+  function renderDraft(){
+    var wrap=$("tTasks");wrap.innerHTML="";
+    draftTasks.forEach(function(dt,i){
+      var row=document.createElement("div");row.className="draft-row";
+      row.innerHTML='<input type="text" placeholder="子任务描述" value="'+esc(dt.desc)+'">'+
+        '<input type="date" value="'+dt.date+'">';
+      var rm=document.createElement("button");rm.className="del";rm.textContent="移除";
+      rm.onclick=function(){draftTasks.splice(i,1);renderDraft();};
+      var ins=row.querySelectorAll("input");
+      ins[0].oninput=function(){dt.desc=ins[0].value;};
+      ins[1].onchange=function(){dt.date=ins[1].value;};
+      row.appendChild(rm);wrap.appendChild(row);
+    });
+  }
+  function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+  function renderTargets(){
+    var wrap=$("targetList");wrap.innerHTML="";
+    if(!targets.length){wrap.innerHTML='<p class="hint">还没有目标，先在上方新建一个吧。</p>';return;}
+    targets.slice().sort(function(a,b){return a.date<b.date?1:-1;}).forEach(function(tg){
+      var card=document.createElement("div");card.className="target";
+      var doneCnt=tg.tasks.filter(function(x){return x.done;}).length;
+      var typeLabel=tg.type==="work"?"工作":"私人";
+
+      // header: desc + badge + delete
+      var th=document.createElement("div");th.className="th";
+      var tdesc=document.createElement("span");tdesc.className="tdesc";tdesc.textContent=tg.desc;
+      var right=document.createElement("span");
+      var badge=document.createElement("span");
+      badge.className="badge "+(tg.type==="work"?"work":"private");
+      badge.textContent=typeLabel;
+      var delBtn=document.createElement("button");delBtn.className="del";delBtn.textContent="删除";
+      delBtn.onclick=function(){
+        if(confirm("删除该目标及其所有子任务？")){targets=targets.filter(function(x){return x!==tg;});save(K_T,targets);renderAll();}
+      };
+      right.appendChild(badge);right.appendChild(document.createTextNode(" "));right.appendChild(delBtn);
+      th.appendChild(tdesc);th.appendChild(right);card.appendChild(th);
+
+      var prog=document.createElement("div");prog.className="progress";
+      prog.textContent="目标日期 "+tg.date+" · 进度 "+doneCnt+"/"+tg.tasks.length;
+      card.appendChild(prog);
+
+      var list=document.createElement("div");
+      if(!tg.tasks.length){list.innerHTML='<p class="hint">暂无子任务</p>';}
+      tg.tasks.forEach(function(ts){
+        var sd=document.createElement("div");
+        sd.className="subtask"+(ts.done?" done":"");
+        var cb=document.createElement("input");cb.type="checkbox";cb.checked=ts.done;
+        cb.onchange=function(){
+          ts.done=cb.checked;ts.doneDate=cb.checked?todayStr():null;
+          save(K_T,targets);renderAll();
+        };
+        var main=document.createElement("div");main.className="smain";
+        var descDiv=document.createElement("div");descDiv.className="sdesc";descDiv.textContent=ts.desc;
+        var dateDiv=document.createElement("div");dateDiv.className="sdate";
+        dateDiv.appendChild(document.createTextNode("截止 "+ts.date));
+        if(ts.done){
+          var span=document.createElement("span");span.className="sdone";
+          span.textContent=" · 已于 "+ts.doneDate+" 完成";
+          dateDiv.appendChild(span);
+        }
+        main.appendChild(descDiv);main.appendChild(dateDiv);
+        var rmBtn=document.createElement("button");rmBtn.className="del";rmBtn.textContent="移除";
+        rmBtn.onclick=function(){if(confirm("移除该子任务？")){tg.tasks=tg.tasks.filter(function(x){return x!==ts;});save(K_T,targets);renderAll();}};
+        sd.appendChild(cb);sd.appendChild(main);sd.appendChild(rmBtn);list.appendChild(sd);
+      });
+      card.appendChild(list);
+
+      // inline add-subtask form for existing target
+      var addForm=document.createElement("div");addForm.className="addSub";
+      var asDesc=document.createElement("input");asDesc.type="text";asDesc.placeholder="新增子任务描述";asDesc.className="asDesc";
+      var asDate=document.createElement("input");asDate.type="date";asDate.value=todayStr();asDate.className="asDate";
+      var asBtn=document.createElement("button");asBtn.type="button";asBtn.className="asBtn";asBtn.textContent="添加";
+      asBtn.onclick=function(){
+        var d=asDesc.value.trim();
+        if(!d){alert("请填写子任务描述");return;}
+        tg.tasks.push({id:rid(),desc:d,date:asDate.value||todayStr(),done:false,doneDate:null});
+        save(K_T,targets);renderAll();
+      };
+      asDesc.onkeydown=function(e){if(e.key==="Enter")asBtn.click();};
+      addForm.appendChild(asDesc);addForm.appendChild(asDate);addForm.appendChild(asBtn);
+      card.appendChild(addForm);
+
+      wrap.appendChild(card);
+    });
+  }
+
+  // ---------- medications ----------
+  function addDays(n){var x=new Date();x.setDate(x.getDate()+n);return x;}
+  function refillInfo(m){
+    if(!m.dose||m.dose<=0)return {date:"",days:null,level:"na"};
+    var days=Math.floor(m.inventory/m.dose);
+    var lvl="ok";
+    if(days<=0)lvl="out"; else if(days<=7)lvl="soon";
+    return {date:fmt(addDays(days)),days:days,level:lvl};
+  }
+  var editingMed=null;
+  function renderMeds(){
+    var wrap=$("medList");wrap.innerHTML="";
+    if(!meds.length){wrap.innerHTML='<p class="hint">还没有药品，先在上方添加。</p>';return;}
+    meds.forEach(function(m){
+      var ri=refillInfo(m);
+      var card=document.createElement("div");card.className="target";
+      var head=document.createElement("div");head.className="th";
+      var nm=document.createElement("span");nm.className="tdesc";nm.textContent=m.name;
+      var right=document.createElement("span");
+      var st=document.createElement("span");st.className="badge";
+      st.textContent= ri.level==="out"?"已缺货":ri.level==="soon"?("需 "+ri.days+" 天内补货"):ri.level==="na"?"用量未设":"库存充足";
+      if(ri.level==="out"){st.style.background="#fee2e2";st.style.color="#b91c1c";}
+      else if(ri.level==="soon"){st.style.background="#fef3c7";st.style.color="#b45309";}
+      var editBtn=document.createElement("button");editBtn.className="del";editBtn.textContent="编辑";
+      editBtn.onclick=function(){editingMed=m;$("mName").value=m.name;$("mDesc").value=m.desc||"";$("mDose").value=m.dose||"";$("mInv").value=m.inventory||"";$("mSave").textContent="更新保存";switchTab("meds");window.scrollTo({top:$("p-meds").offsetTop-10,behavior:"smooth"});};
+      var delBtn=document.createElement("button");delBtn.className="del";delBtn.textContent="删除";
+      delBtn.onclick=function(){if(confirm("删除该药品？")){meds=meds.filter(function(x){return x!==m;});save(K_M,meds);renderAll();}};
+      right.appendChild(st);right.appendChild(document.createTextNode(" "));right.appendChild(editBtn);right.appendChild(document.createTextNode(" "));right.appendChild(delBtn);
+      head.appendChild(nm);head.appendChild(right);card.appendChild(head);
+      var info=document.createElement("div");info.className="progress";
+      info.innerHTML="每日用量 "+(m.dose||0)+" 粒 · 库存 "+(m.inventory||0)+" 粒"+(m.desc?(" · "+esc(m.desc)):"")+"<br>补货截止日：<b>"+(ri.date||"—")+"</b>";
+      card.appendChild(info);
+      wrap.appendChild(card);
+    });
+  }
+
+  // ---------- tabs ----------
+  function switchTab(name){
+    document.querySelectorAll(".tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===name);});
+    document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id==="p-"+name);});
+  }
+  document.querySelectorAll(".tabs button").forEach(function(b){b.onclick=function(){switchTab(b.dataset.tab);};});
+
+  // ---------- events ----------
+  $("hDate").value=todayStr();
+  $("tDate").value=todayStr();
+
+  $("hSave").onclick=function(){
+    var d=$("hDate").value||todayStr();
+    var rec={date:d,sleep:Number($("hSleep").value||0),
+      exercise:Number($("hExercise").value||0),medicine:Number($("hMedicine").value||0),
+      mode:$("hMode").value,note:$("hNote").value.trim()};
+    if(rec.date<todayStr()){if(!confirm("日期在过去，确定补打卡？"))return;}
+    var idx=health.findIndex(function(h){return h.date===d;});
+    if(idx>=0)health[idx]=rec;else health.push(rec);
+    save(K_H,health);renderAll();
+    $("hSleep").value="";$("hExercise").value="";$("hMedicine").value="";$("hMode").value="";$("hNote").value="";
+  };
+  $("hReset").onclick=function(){$("hSleep").value="";$("hExercise").value="";$("hMedicine").value="";$("hMode").value="";$("hNote").value="";$("hDate").value=todayStr();};
+
+  document.querySelectorAll("#tType button").forEach(function(b){
+    b.onclick=function(){document.querySelectorAll("#tType button").forEach(function(x){x.classList.remove("on");});b.classList.add("on");curType=b.dataset.v;};
+  });
+  $("tAddTask").onclick=function(){draftTasks.push({desc:"",date:todayStr()});renderDraft();};
+  $("tClearDraft").onclick=function(){draftTasks=[];renderDraft();};
+  $("tSave").onclick=function(){
+    var desc=$("tDesc").value.trim();
+    if(!desc){alert("请填写目标描述");return;}
+    if(!draftTasks.length){alert("至少添加一个子任务");return;}
+    var tasks=draftTasks.map(function(dt){return {id:rid(),desc:dt.desc.trim(),date:dt.date,done:false,doneDate:null};});
+    targets.push({id:rid(),date:$("tDate").value||todayStr(),desc:desc,type:curType,tasks:tasks});
+    save(K_T,targets);
+    draftTasks=[];renderDraft();$("tDesc").value="";$("tDate").value=todayStr();
+    renderAll();alert("目标已保存");
+  };
+
+  // ---------- medications events ----------
+  $("mSave").onclick=function(){
+    var name=$("mName").value.trim();
+    if(!name){alert("请填写药名");return;}
+    var dose=Number($("mDose").value||0), inv=Number($("mInv").value||0);
+    if(editingMed){
+      editingMed.name=name;editingMed.desc=$("mDesc").value.trim();editingMed.dose=dose;editingMed.inventory=inv;
+      editingMed=null;$("mSave").textContent="添加药品";
+    }else{
+      meds.push({id:rid(),name:name,desc:$("mDesc").value.trim(),dose:dose,inventory:inv});
+    }
+    save(K_M,meds);
+    $("mName").value="";$("mDesc").value="";$("mDose").value="";$("mInv").value="";
+    renderAll();
+  };
+  $("mReset").onclick=function(){$("mName").value="";$("mDesc").value="";$("mDose").value="";$("mInv").value="";editingMed=null;$("mSave").textContent="添加药品";};
+
+  // ---------- backup ----------
+  $("btnExport").onclick=function(){
+    download(JSON.stringify({health:health,targets:targets,meds:meds}),"selfgoal_backup.json","application/json");
+  };
+  $("btnImport").onclick=function(){$("fileInput").click();};
+  $("fileInput").onchange=function(e){
+    var f=e.target.files[0];if(!f)return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      try{
+        var d=JSON.parse(rd.result);
+        if(!confirm("导入将覆盖当前所有数据，确定继续？"))return;
+        if(Array.isArray(d.health))health=d.health;
+        if(Array.isArray(d.targets))targets=d.targets;
+        if(Array.isArray(d.meds))meds=d.meds;
+        save(K_H,health);save(K_T,targets);save(K_M,meds);localStorage.setItem(K_SEED,"1");
+        renderAll();alert("导入成功");
+      }catch(err){alert("文件格式错误，无法导入");}
+    };
+    rd.readAsText(f);e.target.value="";
+  };
+  $("btnClear").onclick=function(){
+    if(!confirm("清空全部示例与数据？此操作不可恢复（建议先导出备份）。"))return;
+    [K_H,K_T,K_M,K_SEED].forEach(function(k){localStorage.removeItem(k);});
+    health=[];targets=[];meds=[];renderAll();alert("已清空，可重新开始");
+  };
+  function download(content,name,type){
+    var blob=new Blob([content],{type:type});
+    var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);
+  }
+  function maybeBanner(){
+    var total=health.length+targets.reduce(function(s,t){return s+t.tasks.length;},0)+meds.length;
+    var b=$("backupBanner");
+    if(total>=30){b.style.display="block";b.textContent="数据已积累 "+total+" 条，建议点右上角「导出 JSON」备份，防止意外丢失。";}
+    else b.style.display="none";
+  }
+
+  function renderAll(){renderToday();renderHealth();renderTargets();renderMeds();maybeBanner();}
+
+  seed();
+  renderDraft();
+  renderAll();
+})();
+</script>
+</body>
+</html>
