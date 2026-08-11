@@ -1,36 +1,36 @@
 {
   "_meta": {
-    "updated_at": "2026-08-12T06:30:33.089311",
+    "updated_at": "2026-08-12T07:28:18.422847",
     "all_markets_closed": false
   },
   "comex_gold": {
-    "latest": 4433.1,
+    "latest": 4428.3,
     "prev_close": 4441.1,
     "open": 4430.0,
-    "high": 4433.6,
-    "low": 4427.8,
-    "change_pct": -0.18,
-    "volume": 672.0,
+    "high": 4437.8,
+    "low": 4421.4,
+    "change_pct": -0.29,
+    "volume": 5237.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "latest": 65.01,
+    "latest": 64.97,
     "prev_close": 64.935,
     "open": 64.875,
-    "high": 65.015,
+    "high": 65.065,
     "low": 64.81,
-    "change_pct": 0.12,
-    "volume": 139.0,
+    "change_pct": 0.05,
+    "volume": 345.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4376.43,
-    "change_pct": 0.19299450549451216,
+    "latest": 4370.19,
+    "change_pct": -0.14258196749406915,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "latest": 64.84,
-    "change_pct": 0.2938901778808936,
+    "latest": 64.76,
+    "change_pct": -0.12338062924120649,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -64,22 +64,22 @@
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 68.19104753114905,
+    "latest": 68.15915037709712,
     "prev_close": 68.3930083930084,
-    "change_pct": -0.2952946018967545,
+    "change_pct": -0.3419326352299885,
     "high": 71.34535367545077,
     "low": 67.51251327165176
   },
   "silver_gold_momentum": {
     "_error": null,
-    "latest": -0.6666666666666666,
-    "silver_pct": 0.12,
-    "gold_pct": -0.18,
+    "latest": -0.1724137931034483,
+    "silver_pct": 0.05,
+    "gold_pct": -0.29,
     "change_pct": null
   },
   "london_ratio": {
     "_error": null,
-    "latest": 67.49583590376311,
+    "latest": 67.48285978999381,
     "change_pct": null,
     "high": 70.62346760070052,
     "low": 66.80234327449787
