@@ -1,19 +1,35 @@
 {
   "_meta": {
-    "updated_at": "2026-08-13T16:10:36.732538",
+    "updated_at": "2026-08-13T17:37:16.553867",
     "all_markets_closed": false
   },
   "comex_gold": {
-    "_error": "行情获取失败或无数据"
+    "latest": 4436.9,
+    "prev_close": 4467.5,
+    "open": 4468.8,
+    "high": 4509.1,
+    "low": 4420.3,
+    "change_pct": -0.68,
+    "volume": 51575.0,
+    "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "_error": "行情获取失败或无数据"
+    "latest": 64.755,
+    "prev_close": 65.7,
+    "open": 65.455,
+    "high": 66.45,
+    "low": 64.315,
+    "change_pct": -1.44,
+    "volume": 17274.0,
+    "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "_error": "行情获取失败或无数据"
+    "latest": 4380.76,
+    "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "_error": "行情获取失败或无数据"
+    "latest": 64.57,
+    "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
     "latest": 949.25,
@@ -34,19 +50,45 @@
     "source": "sge.com.cn"
   },
   "fx": {
-    "_error": "行情获取失败或无数据"
+    "usdcny": {
+      "latest": 6.743,
+      "prev_close": 6.744,
+      "open": 6.7465,
+      "high": 6.7465,
+      "low": 6.742,
+      "change_pct": -0.01,
+      "source": "qt.gtimg.cn"
+    }
   },
   "comex_ratio": {
-    "_error": "缺少 comex_gold 或 comex_silver 的价格"
+    "_error": null,
+    "latest": 68.51826113813605,
+    "prev_close": 67.99847792998477,
+    "change_pct": 0.7644041807619293,
+    "high": 71.34535367545077,
+    "low": 67.0132395841125
   },
   "silver_gold_momentum": {
-    "_error": "缺少 comex_silver 或 comex_gold 的涨跌幅"
+    "_error": null,
+    "latest": 2.117647058823529,
+    "silver_pct": -1.44,
+    "gold_pct": -0.68,
+    "change_pct": null
   },
   "london_ratio": {
-    "_error": "缺少 london_gold 或 london_silver 的价格"
+    "_error": null,
+    "latest": 67.8451293170203,
+    "change_pct": null,
+    "high": 70.62346760070052,
+    "low": 66.41444695259592
   },
   "shanghai_gold_night": {
-    "_error": "缺少 COMEX 黄金或 USDCNY 行情"
+    "latest": 961.8858552895977,
+    "prev_close": 968.6633337084251,
+    "change_pct": -0.6996732696467968,
+    "high": 972.2776597489029,
+    "low": 872.8189727844133,
+    "market_state": "实时估算"
   },
   "shanghai_ratio": {
     "_error": null,
