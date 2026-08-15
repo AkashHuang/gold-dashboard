@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "updated_at": "2026-08-15T11:09:29.528684",
-    "all_markets_closed": false
+    "updated_at": "2026-08-15T11:59:46.785771",
+    "all_markets_closed": true
   },
   "comex_gold": {
     "latest": 4432.0,
@@ -34,22 +34,10 @@
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
-    "latest": 938.72,
-    "prev_close": 940.72,
-    "high": 954.0,
-    "low": 940.0,
-    "change_pct": -0.21260311250956712,
-    "update_time": "2026骞�08鏈�17鏃� 02:29:54",
-    "source": "sge.com.cn"
+    "_error": "行情获取失败或无数据"
   },
   "shanghai_silver": {
-    "latest": 15.718,
-    "prev_close": 15.72,
-    "high": 15.72,
-    "low": 15.719000000000001,
-    "change_pct": -0.01272264631043257,
-    "update_time": "2026骞�08鏈�17鏃� 02:29:54",
-    "source": "sge.com.cn"
+    "_error": "行情获取失败或无数据"
   },
   "fx": {
     "usdcny": {
@@ -93,11 +81,6 @@
     "market_state": "实时估算"
   },
   "shanghai_ratio": {
-    "_error": null,
-    "latest": 59.722611019213645,
-    "prev_close": 59.842239185750635,
-    "change_pct": -0.19990589951967616,
-    "high": 62.76239948765388,
-    "low": 58.50971654907785
+    "_error": "缺少 shanghai_gold 或 shanghai_silver 的价格"
   }
 }
