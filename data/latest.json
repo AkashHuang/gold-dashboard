@@ -1,36 +1,36 @@
 {
   "_meta": {
-    "updated_at": "2026-08-17T05:40:51.852610",
-    "all_markets_closed": true
+    "updated_at": "2026-08-17T06:09:33.884624",
+    "all_markets_closed": false
   },
   "comex_gold": {
-    "latest": 4432.0,
-    "prev_close": 4420.4,
-    "open": 4408.2,
-    "high": 4454.6,
-    "low": 4365.5,
-    "change_pct": 0.26,
-    "volume": 124670.0,
+    "latest": 4437.3,
+    "prev_close": 4437.3,
+    "open": 0.0,
+    "high": 4437.3,
+    "low": 4437.3,
+    "change_pct": 0.0,
+    "volume": 0.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "latest": 64.825,
-    "prev_close": 64.993,
-    "open": 64.63,
-    "high": 65.885,
-    "low": 63.645,
-    "change_pct": -0.26,
-    "volume": 31855.0,
+    "latest": 65.108,
+    "prev_close": 65.108,
+    "open": 0.0,
+    "high": 65.108,
+    "low": 65.108,
+    "change_pct": 0.0,
+    "volume": 0.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4375.8,
-    "change_pct": 0.0,
+    "latest": 4376.4,
+    "change_pct": 0.013711778417648299,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "latest": 64.67,
-    "change_pct": 0.0,
+    "latest": 64.74,
+    "change_pct": 0.108241843203948,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -64,29 +64,25 @@
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 68.36868492094099,
-    "prev_close": 68.01347837459419,
-    "change_pct": 0.5222590504641665,
+    "latest": 68.15291515635559,
+    "prev_close": 68.15291515635559,
+    "change_pct": 0.0,
     "high": 71.34535367545077,
     "low": 67.0132395841125
   },
   "silver_gold_momentum": {
-    "_error": null,
-    "latest": -1.0,
-    "silver_pct": -0.26,
-    "gold_pct": 0.26,
-    "change_pct": null
+    "_error": "黄金涨跌幅为 0，无法计算比值"
   },
   "london_ratio": {
     "_error": null,
-    "latest": 67.66352249884027,
+    "latest": 67.59962928637627,
     "change_pct": null,
     "high": 70.62346760070052,
     "low": 66.41444695259592
   },
   "shanghai_gold_night": {
-    "latest": 958.1808748211614,
-    "prev_close": 958.3514176861123,
+    "latest": 961.8441760573569,
+    "prev_close": 962.0153709389618,
     "change_pct": null,
     "high": 972.2776597489029,
     "low": 872.8189727844133,
