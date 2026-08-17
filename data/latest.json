@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "updated_at": "2026-08-18T05:14:56.957780",
+    "updated_at": "2026-08-18T05:46:13.856510",
     "all_markets_closed": true
   },
   "comex_gold": {
@@ -25,12 +25,12 @@
   },
   "london_gold": {
     "latest": 4416.5,
-    "change_pct": -0.06087088357820325,
+    "change_pct": 0.0,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
     "latest": 65.76,
-    "change_pct": -0.8443908323280883,
+    "change_pct": 0.0,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
