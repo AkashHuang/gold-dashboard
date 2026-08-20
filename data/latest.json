@@ -1,31 +1,31 @@
 {
   "_meta": {
-    "updated_at": "2026-08-21T05:49:43.336300",
-    "all_markets_closed": true
+    "updated_at": "2026-08-21T06:14:45.770919",
+    "all_markets_closed": false
   },
   "comex_gold": {
-    "latest": 4575.1,
-    "prev_close": 4545.3,
-    "open": 4580.0,
-    "high": 4597.1,
-    "low": 4506.0,
-    "change_pct": 0.66,
-    "volume": 180464.0,
+    "latest": 4576.3,
+    "prev_close": 4571.4,
+    "open": 4577.0,
+    "high": 4577.7,
+    "low": 4571.0,
+    "change_pct": 0.11,
+    "volume": 232.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "latest": 68.13,
-    "prev_close": 65.825,
-    "open": 67.08,
-    "high": 69.045,
-    "low": 65.755,
-    "change_pct": 3.5,
-    "volume": 68789.0,
+    "latest": 68.23,
+    "prev_close": 68.105,
+    "open": 68.29,
+    "high": 68.355,
+    "low": 68.18,
+    "change_pct": 0.18,
+    "volume": 125.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4519.14,
-    "change_pct": 0.0,
+    "latest": 4518.06,
+    "change_pct": -0.023898352341373073,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
@@ -64,31 +64,31 @@
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 67.15250256861883,
-    "prev_close": 69.051272312951,
-    "change_pct": -2.749796898349177,
+    "latest": 67.07166935365674,
+    "prev_close": 67.12282504955583,
+    "change_pct": -0.07621207221435664,
     "high": 71.34535367545077,
     "low": 66.945116142742
   },
   "silver_gold_momentum": {
     "_error": null,
-    "latest": 5.303030303030303,
-    "silver_pct": 3.5,
-    "gold_pct": 0.66,
+    "latest": 1.6363636363636362,
+    "silver_pct": 0.18,
+    "gold_pct": 0.11,
     "change_pct": null
   },
   "london_ratio": {
     "_error": null,
-    "latest": 66.38959894226532,
+    "latest": 66.37373292199207,
     "change_pct": null,
     "high": 70.62346760070052,
     "low": 66.10758196721312
   },
   "shanghai_gold_night": {
-    "latest": 982.6095841304034,
-    "prev_close": 983.194122847911,
+    "latest": 988.2519202019065,
+    "prev_close": 988.8398154548522,
     "change_pct": null,
-    "high": 987.2966064912309,
+    "high": 988.2519202019065,
     "low": 872.8189727844133,
     "market_state": "隔夜参考"
   },
