@@ -1,36 +1,36 @@
 {
   "_meta": {
-    "updated_at": "2026-08-21T18:23:56.289762",
+    "updated_at": "2026-08-21T18:54:36.295229",
     "all_markets_closed": false
   },
   "comex_gold": {
-    "latest": 4636.0,
+    "latest": 4649.8,
     "prev_close": 4571.4,
     "open": 4577.0,
     "high": 4659.4,
     "low": 4565.5,
-    "change_pct": 1.41,
-    "volume": 75772.0,
+    "change_pct": 1.72,
+    "volume": 78864.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "latest": 69.245,
+    "latest": 69.485,
     "prev_close": 68.105,
     "open": 68.29,
     "high": 70.045,
     "low": 67.96,
-    "change_pct": 1.67,
-    "volume": 21232.0,
+    "change_pct": 2.03,
+    "volume": 22220.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4584.44,
-    "change_pct": -0.003271830196387151,
+    "latest": 4591.23,
+    "change_pct": 0.1481096927869045,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "latest": 69.36,
-    "change_pct": -0.08643042350907847,
+    "latest": 69.43,
+    "change_pct": 0.10092272202999912,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -64,31 +64,31 @@
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 66.95068235973716,
+    "latest": 66.918039864719,
     "prev_close": 67.12282504955583,
-    "change_pct": -0.25645924421622623,
+    "change_pct": -0.30509023523016576,
     "high": 71.34535367545077,
     "low": 66.44320297951582
   },
   "silver_gold_momentum": {
     "_error": null,
-    "latest": 1.1843971631205674,
-    "silver_pct": 1.67,
-    "gold_pct": 1.41,
+    "latest": 1.1802325581395348,
+    "silver_pct": 2.03,
+    "gold_pct": 1.72,
     "change_pct": null
   },
   "london_ratio": {
     "_error": null,
-    "latest": 66.09630911188005,
+    "latest": 66.1274665130347,
     "change_pct": null,
     "high": 70.62346760070052,
     "low": 65.6984240687679
   },
   "shanghai_gold_night": {
-    "latest": 1001.6955648078191,
+    "latest": 1004.6773160576785,
     "prev_close": 988.2519202019065,
-    "change_pct": 1.360345912929364,
-    "high": 1002.3154718922308,
+    "change_pct": 1.6620656656468877,
+    "high": 1004.6773160576785,
     "low": 872.8189727844133,
     "market_state": "实时估算"
   },
