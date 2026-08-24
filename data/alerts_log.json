@@ -1,18 +1,6 @@
 [
   {
     "time": "2026-08-24 05:11",
-    "inst_id": "comex_silver",
-    "message": "COMEX 白银 +1.33% · 已触发",
-    "triggered": true
-  },
-  {
-    "time": "2026-08-24 05:11",
-    "inst_id": "comex_ratio",
-    "message": "美金银比 67.55 · 未进入区间[50,55]",
-    "triggered": false
-  },
-  {
-    "time": "2026-08-24 05:11",
     "inst_id": "silver_gold_momentum",
     "message": "金银涨幅比 0.68 · 未触发",
     "triggered": false
@@ -597,6 +585,18 @@
     "time": "2026-08-24 14:00",
     "inst_id": "shanghai_silver",
     "message": "上海白银 -0.90% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-08-24 15:33",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 +1.10% · 已触发",
+    "triggered": true
+  },
+  {
+    "time": "2026-08-24 15:33",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 -0.09% · 未触发",
     "triggered": false
   }
 ]
