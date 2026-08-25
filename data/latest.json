@@ -1,36 +1,36 @@
 {
   "_meta": {
-    "updated_at": "2026-08-25T18:27:53.069444",
+    "updated_at": "2026-08-25T18:58:38.302213",
     "all_markets_closed": false
   },
   "comex_gold": {
-    "latest": 4693.1,
+    "latest": 4693.8,
     "prev_close": 4697.8,
     "open": 4710.1,
     "high": 4755.0,
     "low": 4670.5,
-    "change_pct": -0.1,
-    "volume": 77722.0,
+    "change_pct": -0.09,
+    "volume": 79334.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "latest": 67.95,
+    "latest": 67.855,
     "prev_close": 68.594,
     "open": 68.965,
     "high": 69.985,
     "low": 67.5,
-    "change_pct": -0.94,
-    "volume": 21898.0,
+    "change_pct": -1.08,
+    "volume": 22406.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4636.1,
-    "change_pct": -0.021349596406362217,
+    "latest": 4640.99,
+    "change_pct": 0.10547658592350075,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "latest": 67.87,
-    "change_pct": -0.23519035719534995,
+    "latest": 67.91,
+    "change_pct": 0.058936201561797616,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -64,30 +64,30 @@
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 69.06696100073584,
+    "latest": 69.17397391496573,
     "prev_close": 68.4870396827711,
-    "change_pct": 0.8467606727505178,
+    "change_pct": 1.0030134684992653,
     "high": 71.34535367545077,
     "low": 66.44320297951582
   },
   "silver_gold_momentum": {
     "_error": null,
-    "latest": 9.399999999999999,
-    "silver_pct": -0.94,
-    "gold_pct": -0.1,
+    "latest": 12.000000000000002,
+    "silver_pct": -1.08,
+    "gold_pct": -0.09,
     "change_pct": null
   },
   "london_ratio": {
     "_error": null,
-    "latest": 68.30853101517607,
+    "latest": 68.3403033426594,
     "change_pct": null,
     "high": 70.62346760070052,
     "low": 65.6984240687679
   },
   "shanghai_gold_night": {
-    "latest": 1013.8822142202647,
+    "latest": 1014.0334399665633,
     "prev_close": 1015.1845586509556,
-    "change_pct": -0.12828646964662052,
+    "change_pct": -0.11339008996768578,
     "high": 1022.4566717571978,
     "low": 872.8189727844133,
     "market_state": "实时估算"
