@@ -208,5 +208,17 @@
     "inst_id": "shanghai_silver",
     "message": "上海白银 -0.18% · 未触发",
     "triggered": false
+  },
+  {
+    "time": "2026-09-01 22:59",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 -1.16% · 已触发",
+    "triggered": true
+  },
+  {
+    "time": "2026-09-01 22:59",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 -0.01% · 未触发",
+    "triggered": false
   }
 ]
