@@ -2,11 +2,11 @@
   "instruments": {
     "comex_gold": {
       "high": 4481.3,
-      "low": 4463.6
+      "low": 4436.5
     },
     "comex_silver": {
-      "high": 66.91,
-      "low": 66.485
+      "high": 67.045,
+      "low": 66.135
     },
     "london_gold": {},
     "london_silver": {},
