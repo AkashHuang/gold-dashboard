@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "updated_at": "2026-09-19T21:32:14.911901",
+    "updated_at": "2026-09-20T06:33:09.235975",
     "all_markets_closed": true
   },
   "comex_gold": {
@@ -85,12 +85,12 @@
     "low": 65.32244234180958
   },
   "shanghai_gold_night": {
-    "latest": 950.8023952288328,
+    "latest": 947.3143183243043,
     "prev_close": 948.587400131818,
-    "change_pct": 0.23350458763283385,
+    "change_pct": null,
     "high": 1022.4566717571978,
     "low": 872.8189727844133,
-    "market_state": "实时估算"
+    "market_state": "隔夜参考"
   },
   "shanghai_ratio": {
     "_error": null,
