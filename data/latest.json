@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "updated_at": "2026-09-26T07:40:30.005818",
-    "all_markets_closed": true
+    "updated_at": "2026-09-26T10:23:16.206969",
+    "all_markets_closed": false
   },
   "comex_gold": {
     "latest": 4320.5,
@@ -25,12 +25,12 @@
   },
   "london_gold": {
     "latest": 4285.12,
-    "change_pct": 0.1690085532820985,
+    "change_pct": 0.0,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
     "latest": 64.3,
-    "change_pct": 0.6259780907668209,
+    "change_pct": 0.0,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -85,12 +85,12 @@
     "low": 64.74432408369194
   },
   "shanghai_gold_night": {
-    "latest": 927.5035221116594,
+    "latest": 932.3589965759481,
     "prev_close": 927.2824280225698,
-    "change_pct": null,
+    "change_pct": 0.5474673519053036,
     "high": 1022.4566717571978,
     "low": 872.8189727844133,
-    "market_state": "隔夜参考"
+    "market_state": "实时估算"
   },
   "shanghai_ratio": {
     "_error": null,
