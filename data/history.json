@@ -2,17 +2,17 @@
   "instruments": {
     "comex_gold": {
       "high": 4315.6,
-      "low": 4243.0
+      "low": 4184.4
     },
     "comex_silver": {
       "high": 64.66,
-      "low": 62.83
+      "low": 61.355
     },
     "london_gold": {},
     "london_silver": {},
     "shanghai_gold": {
       "high": 926.0,
-      "low": 910.0
+      "low": 899.0
     },
     "shanghai_silver": {
       "high": 15.707,
@@ -34,7 +34,7 @@
     },
     "shanghai_ratio": {
       "high": 58.97517504774029,
-      "low": 57.44341532233331
+      "low": 57.35531928439549
     }
   },
   "date": "2026-09-28"
