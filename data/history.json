@@ -5,13 +5,13 @@
       "low": 4156.1
     },
     "comex_silver": {
-      "high": 61.315,
+      "high": 61.46,
       "low": 59.45
     },
     "london_gold": {},
     "london_silver": {},
     "shanghai_gold": {
-      "high": 905.0,
+      "high": 907.0,
       "low": 900.0
     },
     "shanghai_silver": {
@@ -37,5 +37,5 @@
       "low": 56.49156319643426
     }
   },
-  "date": "2026-10-09"
+  "date": "2026-10-10"
 }
