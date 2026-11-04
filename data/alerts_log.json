@@ -154,5 +154,53 @@
     "inst_id": "shanghai_silver",
     "message": "上海白银 -0.02% · 未触发",
     "triggered": false
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "comex_gold",
+    "message": "COMEX 黄金 +3.35% · 已触发",
+    "triggered": true
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "comex_silver",
+    "message": "COMEX 白银 +5.21% · 已触发",
+    "triggered": true
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "comex_ratio",
+    "message": "美金银比 77.80 · 未进入区间[50,55]",
+    "triggered": false
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "silver_gold_momentum",
+    "message": "金银涨幅比 1.56 · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "london_gold",
+    "message": "伦敦金 +0.63% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "london_silver",
+    "message": "伦敦银 +0.73% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "shanghai_gold",
+    "message": "上海黄金 AU99.99 -0.23% · 未触发",
+    "triggered": false
+  },
+  {
+    "time": "2026-11-05 05:36",
+    "inst_id": "shanghai_silver",
+    "message": "上海白银 -0.02% · 未触发",
+    "triggered": false
   }
 ]
