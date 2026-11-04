@@ -1,22 +1,22 @@
 {
   "instruments": {
     "comex_gold": {
-      "high": 4039.3,
+      "high": 4062.2,
       "low": 3928.2
     },
     "comex_silver": {
-      "high": 51.87,
+      "high": 52.365,
       "low": 48.98
     },
     "london_gold": {},
     "london_silver": {},
     "shanghai_gold": {
-      "high": 866.0,
-      "low": 839.0
+      "high": 870.0,
+      "low": 863.0
     },
     "shanghai_silver": {
-      "high": 12.445,
-      "low": 11.700000000000001
+      "high": 12.412,
+      "low": 12.411
     },
     "fx": {},
     "comex_ratio": {
