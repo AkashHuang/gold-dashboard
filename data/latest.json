@@ -1,36 +1,36 @@
 {
   "_meta": {
-    "updated_at": "2026-11-07T05:39:48.573637",
+    "updated_at": "2026-11-07T09:24:28.714204",
     "all_markets_closed": false
   },
   "comex_gold": {
-    "latest": 4072.5,
+    "latest": 4079.5,
     "prev_close": 4113.5,
     "open": 4098.5,
     "high": 4116.2,
     "low": 4035.1,
-    "change_pct": -1.0,
-    "volume": 165450.0,
+    "change_pct": -0.83,
+    "volume": 166431.0,
     "source": "qt.gtimg.cn"
   },
   "comex_silver": {
-    "latest": 51.895,
+    "latest": 51.965,
     "prev_close": 52.376,
     "open": 51.725,
     "high": 52.375,
     "low": 51.2,
-    "change_pct": -0.92,
-    "volume": 45719.0,
+    "change_pct": -0.78,
+    "volume": 45936.0,
     "source": "qt.gtimg.cn"
   },
   "london_gold": {
-    "latest": 4065.04,
-    "change_pct": 0.3124090040914192,
+    "latest": 4070.75,
+    "change_pct": 0.1404660224745645,
     "source": "qt.gtimg.cn"
   },
   "london_silver": {
-    "latest": 51.88,
-    "change_pct": 0.503680743897724,
+    "latest": 51.92,
+    "change_pct": 0.07710100231302842,
     "source": "qt.gtimg.cn"
   },
   "shanghai_gold": {
@@ -64,33 +64,33 @@
   },
   "comex_ratio": {
     "_error": null,
-    "latest": 78.4757683784565,
+    "latest": 78.5047628211296,
     "prev_close": 78.53787994501299,
-    "change_pct": -0.07908485255774939,
+    "change_pct": -0.04216707136298111,
     "high": 79.85523498827607,
     "low": 64.85777450257923
   },
   "silver_gold_momentum": {
     "_error": null,
-    "latest": 0.92,
-    "silver_pct": -0.92,
-    "gold_pct": -1.0,
+    "latest": 0.9397590361445783,
+    "silver_pct": -0.78,
+    "gold_pct": -0.83,
     "change_pct": null
   },
   "london_ratio": {
     "_error": null,
-    "latest": 78.35466461063993,
+    "latest": 78.40427580893682,
     "change_pct": null,
     "high": 79.82682478020855,
     "low": 64.74432408369194
   },
   "shanghai_gold_night": {
-    "latest": 882.4646776086292,
+    "latest": 875.1706946163615,
     "prev_close": 881.8563184207565,
-    "change_pct": null,
+    "change_pct": -0.7581307368038896,
     "high": 1022.4566717571978,
     "low": 831.1001848666548,
-    "market_state": "隔夜参考"
+    "market_state": "实时估算"
   },
   "shanghai_ratio": {
     "_error": null,
